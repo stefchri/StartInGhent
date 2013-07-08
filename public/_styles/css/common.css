@@ -1,0 +1,56 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html, body {
+	font-family: Verdana, Arial, "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background: #eaf6fe;
+}
+
+a {
+	padding: 5px 10px;
+	border-radius: 2px;
+	text-decoration: underline;
+	color: #fff;
+}
+
+a:hover, a:focus, a:active {
+	text-decoration: none;
+	background: rgba(0, 0, 0, 0.8);
+}
+a.logo:hover{
+        background: none !important;
+}
+
+p {
+	line-height: 1.3em;
+	text-align: justify;
+}
+
+.customactive {
+    background: #009FE3 !important;
+    color: #fff !important;
+}
+
+li {line-height: 1.2em}
+
+header h1 a {
+    text-decoration: none;
+}
+header h1 a:hover {
+    background-color:inherit;
+    color:inherit;
+}
+
+@font-face {
+    font-family: 'DotDigital';
+    src: url('../../_assets/fonts/enh-dot-digital/enhanced_dot_digital-7-webfont.eot');
+    src: url('../../_assets/fonts/enh-dot-digital/enhanced_dot_digital-7-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../_assets/fonts/enh-dot-digital/enhanced_dot_digital-7-webfont.woff') format('woff'),
+         url('../../_assets/fonts/enh-dot-digital/enhanced_dot_digital-7-webfont.ttf') format('truetype'),
+         url('../../_assets/fonts/enh-dot-digital/enhanced_dot_digital-7-webfont.svg#enhanced_dot_digital-7regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

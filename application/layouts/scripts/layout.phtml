@@ -1,0 +1,18 @@
+<?php echo $this->doctype() . "\n"; ?>
+<html lang="en" >
+    <head>
+        <?php 
+            echo $this->headMeta() . "\n" 
+            . $this->headTitle() . "\n" 
+            . $this->headLink() . "\n" 
+            . $this->headScript() . "\n" ;
+        ?>
+    </head>
+    <body>
+    <?php 
+        echo  $this->layout()->content ."\n"
+        . $this->inlineScript() ."\n";
+    ?>
+        
+    </body>
+</html>

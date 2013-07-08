@@ -1,0 +1,167 @@
+
+
+<header>
+		<div id="logo">
+        	<h1><a class="logo" href="<?php echo $this->url(
+                        array('controller'=>'index', 'action' => 'index'),
+                        'default',
+                        true) ?>" title="StatGhent Home">[ statGhent ]</a></h1>
+		</div>
+        <?php if($this->loggedin == 0):?>
+        <section id="nav-desktop">
+            <div id="buttons-header">
+                <a href="#" class="btn btn-primary btn-login customactive">Login</a>
+                <a href="<?php echo $this->url(
+                        array('controller'=>'account', 'action' => 'register'),
+                        'default',
+                        true) ?>" class="btn btn-secondary btn-register">Register</a>
+                
+             </div>
+         </section>
+         
+        <section id="nav-tablet">
+            <div id="buttons-header-tablet">
+                <a href="#" class="btn btn-login">Login</a>
+                <a href="<?php echo $this->url(
+                        array('controller'=>'account', 'action' => 'register'),
+                        'default',
+                        true) ?>" class="btn btn-register">Register</a>
+                
+             </div>
+         </section>
+         
+         <section id="nav-mobile">         
+         	<a href="#" title="Navigation menu" data-icon="grid" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="menuBtn ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                <span class="ui-btn-inner">
+                    <span class="ui-btn-text"></span>
+                    <span class="ui-icon ui-icon-grid ui-icon-shadow" style="margin: -4px 0 0 -4px;"></span>
+                </span>
+            </a>
+         
+         <div id="buttons-header-mobile">
+         		<a href="#" data-icon="check" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" id="loginMobileBtn" class="btn btn-login ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                	<span class="ui-btn-inner">
+                    	<span class="ui-btn-text">Login</span>
+                        <span class="ui-icon ui-icon-check ui-icon-shadow"></span>
+                    </span>
+                </a>
+                
+                <a href="<?php echo $this->url(
+                        array('controller'=>'account', 'action' => 'register'),
+                        'default',
+                        true) ?>" data-icon="edit" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" id="registerMobileBtn" class="btn btn-register ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                	<span class="ui-btn-inner">
+                    	<span class="ui-btn-text">Register</span>
+                        <span class="ui-icon ui-icon-edit ui-icon-shadow"></span>
+                    </span>
+                </a>
+                
+                <a href="#" title="Disclaimer" id="mobileDisclaimerBtn" data-icon="info" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" id="#styleMobile" class="btn btn-disclaimer ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                    <span class="ui-btn-inner">
+                        <span class="ui-btn-text">Disclaimer</span>
+                        <span class="ui-icon ui-icon-info ui-icon-shadow"></span>
+                    </span>
+                </a>
+             </div>
+         </section>
+    <?php else: ?>
+        <section id="nav-desktop">
+            <div id="buttons-header">
+                <a href="<?php echo $this->url(
+                        array('controller'=>'profile'),
+                        'default',
+                        true) ?>" class="btn btn-primary btn-profile"><?php echo $this->username; ?></a>
+                
+             </div>
+         </section>
+         
+        <section id="nav-tablet">
+            <div id="buttons-header-tablet">
+                <a href="<?php echo $this->url(
+                        array('controller'=>'profile'),
+                        'default',
+                        true) ?>" class="btn btn-profile"><?php echo $this->username; ?></a>
+                
+                
+             </div>
+         </section>
+         
+         <section id="nav-mobile">         
+         	<a href="#" title="Navigation menu" data-icon="grid" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="menuBtn ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                <span class="ui-btn-inner">
+                    <span class="ui-btn-text"></span>
+                    <span class="ui-icon ui-icon-grid ui-icon-shadow" style="margin: -4px 0 0 -4px;"></span>
+                </span>
+            </a>
+         
+         <div id="buttons-header-mobile">
+         		<a href="<?php echo $this->url(
+                        array('controller'=>'profile'),
+                        'default',
+                        true) ?>" data-icon="check" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" id="profileMobileBtn" class="btn btn-profile ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                	<span class="ui-btn-inner">
+                    	<span class="ui-btn-text"><?php echo $this->username; ?></span>
+                        <span class="ui-icon ui-icon-check ui-icon-shadow"></span>
+                    </span>
+                </a>
+                
+                             
+                <a href="#" title="Disclaimer" id="mobileDisclaimerBtn" data-icon="info" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" id="#styleMobile" class="btn btn-disclaimer ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-c">
+                    <span class="ui-btn-inner">
+                        <span class="ui-btn-text">Disclaimer</span>
+                        <span class="ui-icon ui-icon-info ui-icon-shadow"></span>
+                    </span>
+                </a>
+             </div>
+         </section>
+    <?php endif; ?>
+    
+    </header>
+    
+    <div id="container">
+        <?php echo $this->form->renderForm(false) ?>
+            <h2 data-role="header" class="ui-header ui-bar-a ui-title" role="banner" role="heading" aria-level="1">Login panel</h2><span class="closeBtn btn">X</span>
+            <a href="<?php echo $this->url(
+                        array('controller'=>'account', 'action' => 'forgotpassword'),
+                        'default',
+                        true) ?>" title="Forgot password?" class="txtForgot">Forgot password?</a>
+             <?php foreach ($this->form->getElements() as $element): ?>
+                <?php echo $element ?>
+             <?php endforeach; ?>
+            
+        
+        
+        </form>
+        <footer class="navbar">
+        	<div class="navbar-inner">
+            	&copy; Tom Van humbeek & Stefaan Christiaens. <a href="#" title="Disclaimer" class="brand">DISCLAIMER</a>
+            </div>
+        </footer>
+        
+        <div id="view-disclaimer">      
+            <h2 data-role="header" class="ui-header ui-bar-a ui-title" role="banner" role="heading" aria-level="1">Da Rulez</h2><span class="closeBtn btn">X</span>
+        
+            <p>This website was built by order of the Artevelde University College Ghent.</p>
+            
+            <p>Nothing you find (either visual or technical) on this domain and/or website may be copied, used, or tampered with without full consent and approval of its rightful authors.</p>
+            
+            <p>Website built with:
+                <ul>
+                    <li>PHP [Zend Framework] with MVC</li>
+                    <li>RESTful API: Able to generate JSON/JSON-P</li>
+                    <li>MySQL</li>
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>jQuery</li>
+                    <li>Canvas, Twitter Bootstrap, jQuery Mobile</li>
+                    <li>Adobe Photoshop</li>
+                </ul>
+            </p>
+            
+            <p>Copyright by <a href="http://www.arteveldehogeschool.be" title="Artevelde University College" target="_blank">Artevelde University College Ghent</a>, <br/>Stefaan Christiaens and Tom Van humbeek - 2012-2013</p>
+        </div>
+        
+        <div id="overlay">
+        </div>
+    </div>
+

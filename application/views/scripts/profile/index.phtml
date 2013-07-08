@@ -1,0 +1,22 @@
+
+        <h1>Welcome <?php echo $this->username ?></h1>
+        <h2><?php echo $this->firstname ?> <?php echo $this->surname ?></h2>
+        <h2>Email: <a href="mailto:<?php echo $this->email ?>"><?php echo $this->email ?></a></h2>
+        <h2><?php echo ($this->sex=='m'?"Man":"Woman") ;?></h2>
+        <?php if (!empty($this->description)):?>
+            <p><strong>About <?php echo $this->firstname ?>:</strong> <?php echo $this->description ?></p>
+        <?php endif; ?> 
+        <?php if (!empty($this->website)):?>
+            <a href="<?php echo $this->website; ?>"><?php echo $this->website; ?></a>
+        <?php endif; ?> 
+        
+        <img src="http://localhost:8888/statGhent/public/images/<?php echo $this->image ;?>" alt="<?php echo $this->username ?>" />
+        <a href="<?php echo $this->url(
+            array('controller'=>'profile', 'action' => 'edit'),
+            'default',
+            true) ?>">Edit Profile</a>
+        <a href="<?php echo $this->url(
+            array('controller'=>'account', 'action' => 'logout'),
+            'default',
+            true) ?>">Logout</a>
+        

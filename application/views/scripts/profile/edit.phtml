@@ -1,0 +1,13 @@
+
+    <?php echo $this->form; ?>
+
+    <img src="<?php echo $this->image ?>"  alt="test" />
+    <a href="<?php echo $this->url(
+        array('controller'=> 'account', 'action'=>'index'),
+        'default',
+        true) ?>">Cancel</a>
+    <a href="<?php echo $this->url(
+        array('controller'=>'account', 'action' => 'logout'),
+        'default',
+        true) ?>">Logout</a>
+        
