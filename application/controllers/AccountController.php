@@ -60,7 +60,8 @@ class AccountController extends Zend_Controller_Action
             $values = $form->getValues();
             $form->populate($values);
             $val = $this->getRequest()->getPost();
-                if ($form->isValid( $request->getPost() )) {
+            
+            if ($form->isValid( $request->getPost() )) {
                 $user = new Application_Model_User();
                 $user->setUsername($val["username"]);
                 $user->setPasswordraw($val["passwordraw"]);

@@ -10,7 +10,7 @@
             <a href="<?php echo $this->website; ?>"><?php echo $this->website; ?></a>
         <?php endif; ?> 
         
-        <img src="http://localhost:8888/statGhent/public/images/<?php echo $this->image ;?>" alt="<?php echo $this->username ?>" />
+        <img src="<?php echo $this->baseUrl() ?>/images/<?php echo $this->image ;?>" alt="<?php echo $this->username ?>" />
         <a href="<?php echo $this->url(
             array('controller'=>'profile', 'action' => 'edit'),
             'default',
