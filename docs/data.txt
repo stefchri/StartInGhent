@@ -1,0 +1,73 @@
+Start in Gent
+Discover where to start
+
+Een informatieve en interactieve webapp die vertelt waar je het beste kan wonen 
+indien je een starter bent.
+
+
+DATASETS:
+
+Wijken
+http://datatank.gent.be/Grondgebied/Wijken.json
+
+Basisscholen
+http://datatank.gent.be/Onderwijs&Opvoeding/Basisscholen.json
+
+Secundaire scholen
+http://datatank.gent.be/Onderwijs&Opvoeding/SecundaireScholen.json
+
+Parken
+http://datatank.gent.be/MilieuEnNatuur/Parken.json
+
+Comfortniveau woningen
+http://datatank.gent.be/Wonen/ComfortniveauWoningen.json
+
+Etnisch culturele minderheden / wijk
+http://datatank.gent.be/Bevolking/EtnischCultureleMinderhedenPerWijk.json
+
+Bib
+http://datatank.gent.be/Cultuur-Sport-VrijeTijd/Bibliotheek.json
+
+Sportccentra
+http://datatank.gent.be/Cultuur-Sport-VrijeTijd/Sportcentra.json
+
+Bevolkingsdichtheid/wijk
+http://datatank.gent.be/Bevolking/BevolkingsdichtheidPerWijk.json
+
+Externe migratie
+http://datatank.gent.be/Bevolking/ExterneWijkmigratiePerDuizend.json
+
+Natuurlijke groei
+http://datatank.gent.be/Bevolking/NatuurlijkeGroeiPerDuizend.json
+http://datatank.gent.be/Bevolking/Geboortes.json
+http://datatank.gent.be/Bevolking/Overlijdens.json
+
+Werkloosheid
+http://datatank.gent.be/WerkEnEconomie/Werkzoekendenwerkloosheidsduur5j.json
+http://datatank.gent.be/WerkEnEconomie/Werkzoekendenwerkloosheidsduur1j.json
+http://datatank.gent.be/WerkEnEconomie/Werkloosheidsdruk.json
+
+Kotzones
+http://data.appsforghent.be/poi/kotzones.json
+
+Parkings
+http://data.appsforghent.be/poi/parkings.json
+
+Stations
+http://data.appsforghent.be/poi/stationsgent.json
+
+OCMW steuntrekkers
+http://data.appsforghent.be/steunocmw/leeftijdjonger18.json
+http://data.appsforghent.be/steunocmw/leeftijd18tot24.json
+http://data.appsforghent.be/steunocmw/leeftijd25tot39.json
+
+Bevolkingsdichtheid
+http://data.appsforghent.be/demografie/totaalaantalinwoners.json
+
+Scholing werkzoekenden
+http://data.appsforghent.be/werkzoekenden/hooggeschoold.json
+http://data.appsforghent.be/werkzoekenden/middengeschoold.json
+http://data.appsforghent.be/werkzoekenden/laaggeschoold.json
+
+Bioscopen
+http://datatank.gent.be/Cultuur-Sport-VrijeTijd/Bioscopen.json
