@@ -1,6 +1,4 @@
-INSTALL.txt
-LICENSE.txt
-README.txt
-demos/
-extras/documentation
-
+/config
+/vendor
+composer.phar
+composer.lock
