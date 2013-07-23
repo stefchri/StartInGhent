@@ -109,12 +109,8 @@ function displayMap(){
 
 //DOCUMENT READY
 $(document).ready(function(){
-	
 	display();
 	getGeolocation();
-	
-	
-		
 });
 
 	

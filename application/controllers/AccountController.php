@@ -26,7 +26,8 @@ class AccountController extends Zend_Controller_Action
                 
                 $adapter = new statGhent_Auth_Adapter_User($user->getUsername(),
                                                       $user->getPassword());
-                                                            
+                                                           
+                //Zend_Debug::dump($adapter);exit();
                 $this->_auth->authenticate($adapter);
 
                 if ($this->_auth->hasIdentity() ) {
@@ -37,8 +38,8 @@ class AccountController extends Zend_Controller_Action
                                               ));
                     return $this->redirect('profile/index');
                 } else {
-                    $view->assign('error',$form->isErrors());
-                    //return $this->redirect('error/');
+                    $view->error = "Authentication failed";
+                    
                 }
             }
         }
@@ -55,103 +56,99 @@ class AccountController extends Zend_Controller_Action
 
         $request = $this->getRequest();
 
-        if ($request->isPost() ) {
+        if ($request->isPost()) {
             
-            $values = $form->getValues();
-            $form->populate($values);
-            $val = $this->getRequest()->getPost();
+            //$values = $form->getValues();
+            //$form->populate($values);
+            $val = $request->getPost();
             
-            if ($form->isValid( $request->getPost() )) {
+            if ($form->isValid($val)) {
                 $user = new Application_Model_User();
                 $user->setUsername($val["username"]);
                 $user->setPasswordraw($val["passwordraw"]);
                 $user->setFirstname($val["firstname"]);
                 $user->setSurname($val["surname"]);
                 $user->setEmail($val["email"]);
-                $user->setSex($val["sex"]);
+                $user->setGender($val["gender"]);
                 $user->setDescription($val["description"]);
                 $user->setWebsite($val["website"]);
-                $createdd = new DateTime('now', new DateTimeZone('UTC'));
-                $createdd = $createdd->format('Y-m-d H:i:s');
+                $user->setActivationkey(statGhent_Utility::randomString(64));
+                $now = new DateTime('now');
+                $createdd = $now->format('Y-m-d H:i:s');
                 $user->setCreateddate( $createdd );
-                $user->setActivationkey(statGhent_Utility::randomString(64) );
                 
-                
-
-                if($form->image->isUploaded())
+                if($form->avatar->isUploaded())
                 {
-                    $image = new Application_Model_Image();
-                    $name = $form->image->getFileName(null,false);
-                    
-                    $mime = $form->image->getMimeType();
-                    
-                    $image->setMimetype($mime);
-                    $image->setImage($name);
+                    $mime = $form->avatar->getMimeType();
                     $exts = explode('/', $mime);
                     $ext = end($exts);
-                    
-                    $new_image_name = $user->getUsername(). '.' . $ext;     
-                    
-                    //NOT WORKING WHEN ONLY RENAME FILTER... NEITHER IS NOW
-                    $form->image->addFilter('Rename',$new_image_name, true);
-                    
+                    $new_img_name = base64_encode(statGhent_Utility::randomString(20) . microtime());
+                    $form->avatar->addFilter('Rename',$new_img_name . '.' . $ext, true);
+                    $user->setAvatar($new_img_name . '.' . $ext);
                     
                     try {
                         
-                        if ($form->image->receive()) {
-                            $imMapper = new Application_Model_ImageMapper();
-                            $imid = $imMapper->save($image);
-                            
-                            $user->setImage($imid);
+                        if ($form->avatar->receive()) {
+                           
                             $uMapper = new Application_Model_UserMapper();
                             $uid = $uMapper->save($user);
                             $user->setId($uid);
+                            
+                            //SEND AUTHENTICATION MAIL
                             $config = array('auth' => 'login',
                                             'username' => 'statGhent@gmail.com',
-                                            'password' => 'statGhent1991',
-                                            'ssl' => 'tls');
+                                            'password' => START_IN_GHENT_PWD,
+                                            'ssl' => 'ssl',
+                                            'port' => '465');
 
                             $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
                                                         
                             $html = "<table style='width:60%; margin-left:5%'>
 
-                                            <tr>
-                                                    <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>ACTIVATION MAIL STATGHENT</th>
+                                    <tr>
+                                            <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>ACTIVATION MAIL StarInGhent</th>
 
-                                            </tr>
-                                            <tr style='height:80px;'>
+                                    </tr>
+                                    <tr style='height:80px;'>
 
-                                                <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Welcome " . $user->getUsername() . " to statGhent!</td>
-                                            </tr>
-                                            <tr style='height:40px;'>
+                                        <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Welcome " . $user->getUsername() . " to startInGhent!</td>
+                                    </tr>
+                                    <tr style='height:40px;'>
 
-                                                <td colspan='5'><a href='http://localhost:8888/statGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey() ."' style='color:#3e3e3e; text-decoration:underline;'>Activate your account now!</a></td>
-                                            </tr>
-                                            <tr>
+                                        <td colspan='5'><a href='http://localhost/StartInGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey() ."' style='color:#3e3e3e; text-decoration:underline;'>Activate your account now!</a></td>
+                                    </tr>
+                                    <tr>
 
-                                                <td colspan='5'>Link not working? Try copying this link into your browser:</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td colspan='5'>http://localhost:8888/statGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey()."</td>
-                                            </tr>
-                                            </table>
+                                        <td colspan='5'>Link not working? Try copying this link into your browser:</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan='5'>http://localhost/StartInGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey()."</td>
+                                    </tr>
+                                </table>
                             ";
                             
                             $mail = new Zend_Mail();
                             $mail->setBodyHtml($html);
                             $mail->setFrom('statGhent@gmail.com');
                             $mail->addTo($user->getEmail());
-                            $mail->setSubject('statGhent | Activationlink');
+                            $mail->setSubject('startInGhent | Activationlink');
                             $mail->send($transport);
-                            return $this->redirect('account/index');
+                            //var_dump('oleeee');exit();
+                            return $this->redirect('account/login');
                         }
                         else {
-                            throw new Zend_Exception("file not uploaded or mail kapoet");
+                            throw new Zend_Exception("File not uploaded.");
                        }
                         
-                    } catch (Zend_File_Transfer_Exception $e) {
+                    } 
+                    catch (Zend_File_Transfer_Exception $e) {
                         throw new Zend_Exception("file not uploaded well");
+                    }
+                    catch (Zend_Mail_Exception $e) {
+                        throw new Zend_Exception("Mail not sent correctly: " . $e);
+                    }
+                    catch (Zend_Exception $e) {
+                        throw new Zend_Exception("Error: " . $e);
                     }
                 }
                 else { 
@@ -160,51 +157,54 @@ class AccountController extends Zend_Controller_Action
                     
                     $uid = $uMapper->save($user);
                     $user->setId($uid);
-                            $config = array('auth' => 'login',
-                                            'username' => 'statGhent@gmail.com',
-                                            'password' => 'statGhent1991',
-                                            'ssl' => 'tls');
+                    $config = array('auth' => 'login',
+                                    'username' => 'statGhent@gmail.com',
+                                    'password' => START_IN_GHENT_PWD,
+                                    'ssl' => 'ssl',
+                                    'port' => '465');
 
-                            $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-                                                        
-                            $html = "<table style='width:60%; margin-left:5%'>
+                    $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 
-                                            <tr>
-                                                    <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>ACTIVATION MAIL STATGHENT</th>
+                    $html = "<table style='width:60%; margin-left:5%'>
 
-                                            </tr>
-                                            <tr style='height:80px;'>
+                                <tr>
+                                    <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>ACTIVATION MAIL STARTINGHENT</th>
+                                </tr>
+                                <tr style='height:80px;'>
+                                    <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Welcome " . $user->getUsername() . " to startInGhent!</td>
+                                </tr>
+                                <tr style='height:40px;'>
+                                    <td colspan='5'><a href='http://localhost/StartInGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey() ."' style='color:#3e3e3e; text-decoration:underline;'>Activate your account now!</a></td>
+                                </tr>
+                                <tr>
+                                    <td colspan='5'>Link not working? Try copying this link into your browser:</td>
+                                </tr>
+                                <tr>
+                                    <td colspan='5'>http://localhost/StartInGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey()."</td>
+                                </tr>
+                            </table>
+                    ";
+                    try{
+                        $mail = new Zend_Mail();
+                        $mail->setBodyHtml($html);
+                        $mail->setFrom('statGhent@gmail.com');
+                        $mail->addTo($user->getEmail());
+                        $mail->setSubject('startInGhent | Activationlink');
+                        $mail->send($transport);
 
-                                                <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Welcome " . $user->getUsername() . " to statGhent!</td>
-                                            </tr>
-                                            <tr style='height:40px;'>
-
-                                                <td colspan='5'><a href='http://localhost:8888/statGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey() ."' style='color:#3e3e3e; text-decoration:underline;'>Activate your account now!</a></td>
-                                            </tr>
-                                            <tr>
-
-                                                <td colspan='5'>Link not working? Try copying this link into your browser:</td>
-                                            </tr>
-                                            <tr>
-
-                                                <td colspan='5'>http://localhost:8888/statGhent/public/account/activate?id=". $user->getId() ."&key=". $user->getActivationkey()."</td>
-                                            </tr>
-                                            </table>
-                            ";
-                            
-                            $mail = new Zend_Mail();
-                            $mail->setBodyHtml($html);
-                            $mail->setFrom('statGhent@gmail.com');
-                            $mail->addTo($user->getEmail());
-                            $mail->setSubject('statGhent | Activationlink');
-                            $mail->send($transport);
-                            
-                            return $this->redirect('account/index');
+                        return $this->redirect('account/login');
+                    }
+                    catch (Zend_Mail_Exception $e) {
+                        throw new Zend_Exception("Mail not sent correctly: " . $e);
+                    }
+                    catch (Zend_Exception $e) {
+                        throw new Zend_Exception("Error: " . $e);
+                    }
                 }
                 
             }
             else { 
-               throw new Zend_Exception("form not valid");
+               print_r($val);exit();
             }
         }
         $view->form = $form;
@@ -223,19 +223,19 @@ class AccountController extends Zend_Controller_Action
             try {
                 $user = new Application_Model_User($userM->read($id));
                // Zend_Debug::dump($user);exit();
-               if ($user->getActivationkey() == $key) {
+               if ($user->getActivationkey() == $key && $user->getActivationdate() == null) {
                     //Zend_Debug::dump('jes');die();
-                    $activationdate = new DateTime('now', new DateTimeZone('UTC'));
-                    $activationdate = $activationdate->format('Y-m-d H:i:s');
+                    $now = new DateTime('now');
+                    $nowF = $now->format('Y-m-d H:i:s');
+                    $activationdate = $nowF;
+                    $modifieddate = $nowF;
                     $user->setActivationdate($activationdate);
-                    $modifieddate = new DateTime('now', new DateTimeZone('UTC'));
-                    $modifieddate = $createdd->format('Y-m-d H:i:s');
                     $user->setModifieddate($modifieddate);
                     $userM->save($user);
                     return $this->redirect('account/login');
                    
                }  else {
-                   throw new Zend_Exception('The key provided was incorrect.');
+                   throw new Zend_Exception("The specified user doesn&apos;t exist, the key provided was incorrect, or the user was already authenticated.");
 
                }
             }
@@ -252,7 +252,7 @@ class AccountController extends Zend_Controller_Action
     {
         $form = new Application_Form_Forgotpassword();
         $view = $this->view;
-        $view->title = 'Forgot Password';
+        $view->title = "Forgot Password";
 
         $request = $this->getRequest();
 
@@ -267,48 +267,49 @@ class AccountController extends Zend_Controller_Action
                     $pass = statGhent_Utility::randomString(6);
                     $user->setPasswordraw($pass);
                     
-                    $modifieddate = new DateTime('now', new DateTimeZone('UTC'));
-                    $modifieddate = $createdd->format('Y-m-d H:i:s');
+                    $now = new DateTime('now');
+                    $modifieddate = $now->format('Y-m-d H:i:s');
                     $user->setModifieddate($modifieddate);
                     
                     $userM->save($user);
                     
                     $config = array('auth' => 'login',
                                             'username' => 'statGhent@gmail.com',
-                                            'password' => 'statGhent1991',
-                                            'ssl' => 'tls');
+                                            'password' => START_IN_GHENT_PWD,
+                                            'ssl' => 'tls',
+                                            'port' =>'465');
 
-                            $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-                                                        
-                            $html = "<table style='width:60%; margin-left:5%'>
+                    $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 
-                                <tr>
-                                        <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>FORGOT PASSWORD MAIL STATGHENT</th>
+                    $html = "<table style='width:60%; margin-left:5%'>
 
-                                </tr>
-                                <tr style='height:80px;'>
+                        <tr>
+                                <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>FORGOT PASSWORD MAIL STARTINGHENT</th>
 
-                                    <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Hello " . $user->getUsername() . "!</td>
-                                </tr>
-                                <tr style='height:40px;'>
+                        </tr>
+                        <tr style='height:80px;'>
 
-                                    <td colspan='5'>Your new password is <em>". $pass ."</em>.</td>
-                                </tr>
-                                <tr style='height:40px;'>
+                            <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Hello " . $user->getUsername() . "!</td>
+                        </tr>
+                        <tr style='height:40px;'>
 
-                                    <td colspan='5'>You can change this on the edit profile page.</td>
-                                </tr>
-                                
-                                </table>
-                            ";
-                            
-                            $mail = new Zend_Mail();
-                            $mail->setBodyHtml($html);
-                            $mail->setFrom('statGhent@gmail.com');
-                            $mail->addTo($user->getEmail());
-                            $mail->setSubject('statGhent | Activationlink');
-                            $mail->send($transport);
-                            return $this->redirect('account/login');
+                            <td colspan='5'>Your new password is <em>". $pass ."</em>.</td>
+                        </tr>
+                        <tr style='height:40px;'>
+
+                            <td colspan='5'>You can change this on the edit profile page.</td>
+                        </tr>
+
+                        </table>
+                    ";
+
+                    $mail = new Zend_Mail();
+                    $mail->setBodyHtml($html);
+                    $mail->setFrom('statGhent@gmail.com');
+                    $mail->addTo($user->getEmail());
+                    $mail->setSubject('statGhent | Activationlink');
+                    $mail->send($transport);
+                    return $this->redirect('account/login');
                 }
             }
         }

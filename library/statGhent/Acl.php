@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Olivier Parent adapted by Stefaan Christiaens & Tom Van humbeek
+ * @author Olivier Parent adapted by Stefaan Christiaens
  */
 class statGhent_Acl extends Zend_Acl
 {

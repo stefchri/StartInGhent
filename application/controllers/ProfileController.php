@@ -15,21 +15,16 @@ class ProfileController extends Zend_Controller_Action
         $userM = new Application_Model_UserMapper();
         $user = new Application_Model_User($userM->read($id));
         $view = $this->view;
-        //Zend_Debug::dump($user);
+        
         $view->assign('username',$user->getUsername());
         $view->assign('firstname',$user->getFirstname());
         $view->assign('surname',$user->getSurname());
         $view->assign('email',$user->getEmail());
-        $view->assign('sex',$user->getSex());
+        $view->assign('gender',$user->getGender());
         $view->assign('description',$user->getDescription());
         $view->assign('website',$user->getWebsite());
         
-        $imgM = new Application_Model_ImageMapper();
-        $img = new Application_Model_Image($imgM->read($user->getImage()));
-        
-        $view->assign('image',$img->getImage());
-        $view->assign('mime',$img->getMimetype());
-        $view->assign('path',APPLICATION_PATH);
+        $view->assign('avatar',$user->getAvatar());
     }
 
     public function editAction()

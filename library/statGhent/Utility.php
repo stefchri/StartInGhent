@@ -7,12 +7,15 @@ abstract class statGhent_Utility
      * @param string $algo.
      * @return string
      */
-    public static function hash($data, $algo = 'sha1')
+    public static function hash($data, $algo = 'sha512')
     {
-        $key = 'saltiewaltietestimbalti oh snap';
-
-        // Hash-based Message Authentication Code
-        return hash_hmac($algo, $data, $key);
+        $key = START_IN_GHENT_SALT;
+        $res = hash($algo, $data . $key);
+        for ($i = 0; $i <= 30; $i++)
+        {
+            $res = hash($algo, $res . $key);
+        }
+        return substr($res, 0, 64);
     }
     
     public static function randomString($length = 64) {
@@ -23,7 +26,6 @@ abstract class statGhent_Utility
         for ($i = 0; $i < $length; $i++) {
             $str .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
-
         return $str;
     }
 }

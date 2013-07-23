@@ -33,12 +33,6 @@ $(document).ready(function() {
 		});
 	}
 	
-	$('footer a, #mobileDisclaimerBtn').click(function() {
-		$('#overlay').clearQueue().fadeIn('fast');
-		$('#view-login, #view-disclaimer').clearQueue().hide();
-		$('#view-disclaimer').clearQueue().delay(100).fadeIn();
-	});
-	
 	$('#nav-mobile .menuBtn').click(function(){
 		$('#buttons-header-mobile').clearQueue().fadeToggle('fast');
 		$('#overlay').clearQueue().fadeToggle();
@@ -76,4 +70,11 @@ function showOverlays() {
             $("#overlay").show();
         }
 	
+}
+
+function showDisclaimer()
+{
+    $('#overlay').clearQueue().fadeIn('fast');
+    $('#view-login, #view-disclaimer').clearQueue().hide();
+    $('#view-disclaimer').clearQueue().delay(100).fadeIn();
 }

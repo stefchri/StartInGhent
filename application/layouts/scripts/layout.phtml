@@ -10,9 +10,19 @@
     </head>
     <body>
     <?php 
-        echo  $this->layout()->content ."\n"
-        . $this->inlineScript() ."\n";
+        echo  $this->render('header.phtml') . "\n"; 
     ?>
         
+        <div id="container">
+            
+    <?php echo
+        $this->layout()->content . "\n" . $this->render('disclaimer.phtml'); 
+    ?>
+            
+        </div>
+        <div id="overlay"></div>
+    <?php echo
+        $this->render('footer.phtml') . $this->inlineScript() ."\n";
+    ?>
     </body>
 </html>

@@ -19,21 +19,22 @@ class Application_Model_UserMapper
      */
     public function save(Application_Model_User $user)
     {
-        $data = array('user_firstname'          => $user->getFirstname(),
-                      'user_surname'            => $user->getSurname(),
-                      'user_email'              => $user->getEmail(),
-                      'user_username'           => $user->getUsername(),
-                      'user_password'           => $user->getPassword(),
-                      'user_sex'                => $user->getSex(),
-                      'user_description'        => $user->getDescription(),
-                      'user_website'            => $user->getWebsite(),
-                      'user_createddate'        => $user->getCreateddate(),
-                      'user_modifieddate'       => $user->getModifieddate(),
-                      'user_deleteddate'        => $user->getDeleteddate(),
-                      'user_lastloggedindate'   => $user->getLastloggedindate(),
-                      'user_activationkey'      => $user->getActivationkey(),
-                      'user_activationdate'     => $user->getActivationdate(),
-                      'user_image'              => $user->getImage(),
+        $data = array('firstname'          => $user->getFirstname(),
+                      'surname'            => $user->getSurname(),
+                      'email'              => $user->getEmail(),
+                      'username'           => $user->getUsername(),
+                      'password'           => $user->getPassword(),
+                      'gender'             => $user->getGender(),
+                      'description'        => $user->getDescription(),
+                      'website'            => $user->getWebsite(),
+                      'createddate'        => $user->getCreateddate(),
+                      'modifieddate'       => $user->getModifieddate(),
+                      'deleteddate'        => $user->getDeleteddate(),
+                      'lastloggedindate'   => $user->getLastloggedindate(),
+                      'activationkey'      => $user->getActivationkey(),
+                      'activationdate'     => $user->getActivationdate(),
+                      'avatar'             => $user->getAvatar(),
+                      'answers'            => $user->getAnswers(),
         );
 
         if (null === $user->getId()) {
@@ -53,21 +54,22 @@ class Application_Model_UserMapper
                         ->from($table,
                                array(
                                     'id'                => 'user_id' ,
-                                    'firstname'         => 'user_firstname' ,
-                                    'surname'           => 'user_surname',           
-                                    'email'             => 'user_email',
-                                    'username'          => 'user_username',
-                                    'password'          => 'user_password',
-                                    'sex'               => 'user_sex',
-                                    'description'       => 'user_description',
-                                    'website'           => 'user_website',
-                                    'createddate'       => 'user_createddate',
-                                    'modifieddate'      => 'user_modifieddate',
-                                    'deleteddate'       => 'user_deleteddate',
-                                    'lastloggedindate'  => 'user_lastloggedindate',
-                                    'activationkey'     => 'user_activationkey',
-                                    'activationdate'    => 'user_activationdate',
-                                    'image'             => 'user_image',
+                                    'firstname'         => 'firstname' ,
+                                    'surname'           => 'surname',           
+                                    'email'             => 'email',
+                                    'username'          => 'username',
+                                    'password'          => 'password',
+                                    'gender'            => 'gender',
+                                    'description'       => 'description',
+                                    'website'           => 'website',
+                                    'createddate'       => 'createddate',
+                                    'modifieddate'      => 'modifieddate',
+                                    'deleteddate'       => 'deleteddate',
+                                    'lastloggedindate'  => 'lastloggedindate',
+                                    'activationkey'     => 'activationkey',
+                                    'activationdate'    => 'activationdate',
+                                    'avatar'            => 'avatar',
+                                    'answers'           => 'answers',
                                )
                         )
                         ->where('user_id = :id')
@@ -88,21 +90,22 @@ class Application_Model_UserMapper
                         ->from($table,
                                array(
                                     'id'                => 'user_id' ,
-                                    'firstname'         => 'user_firstname' ,
-                                    'surname'           => 'user_surname',           
-                                    'email'             => 'user_email',
-                                    'username'          => 'user_username',
-                                    'password'          => 'user_password',
-                                    'sex'               => 'user_sex',
-                                    'description'       => 'user_description',
-                                    'website'           => 'user_website',
-                                    'createddate'       => 'user_createddate',
-                                    'modifieddate'      => 'user_modifieddate',
-                                    'deleteddate'       => 'user_deleteddate',
-                                    'lastloggedindate'  => 'user_lastloggedindate',
-                                    'activationkey'     => 'user_activationkey',
-                                    'activationdate'    => 'user_activationdate',
-                                    'image'             => 'user_image',
+                                    'firstname'         => 'firstname' ,
+                                    'surname'           => 'surname',           
+                                    'email'             => 'email',
+                                    'username'          => 'username',
+                                    'password'          => 'password',
+                                    'gender'            => 'gender',
+                                    'description'       => 'description',
+                                    'website'           => 'website',
+                                    'createddate'       => 'createddate',
+                                    'modifieddate'      => 'modifieddate',
+                                    'deleteddate'       => 'deleteddate',
+                                    'lastloggedindate'  => 'lastloggedindate',
+                                    'activationkey'     => 'activationkey',
+                                    'activationdate'    => 'activationdate',
+                                    'avatar'            => 'avatar',
+                                    'answers'           => 'answers',
                                )
                         )
                         ->where($column .' = :c')
@@ -137,22 +140,23 @@ class Application_Model_UserMapper
     {
         $values = array();
         if ($row) {
-            $values['id'                ] = $row['adm_id'               ];
-            $values['surname'           ] = $row['user_surname'         ];
-            $values['firstname'         ] = $row['user_firstname'       ];
-            $values['email'             ] = $row['user_email'           ];
-            $values['username'          ] = $row['user_username'        ];
-            $values['password'          ] = $row['user_password'        ];
-            $values['sex'               ] = $row['user_sex'             ];
-            $values['description'       ] = $row['user_description'     ];
-            $values['website'           ] = $row['user_website'         ];
-            $values['createddate'       ] = $row['user_createddate'     ];
-            $values['modifieddate'      ] = $row['user_modifieddate'    ];
-            $values['deleteddate'       ] = $row['user_deleteddate'     ];
-            $values['lastloggedindate'  ] = $row['user_lastloggedindate'];
-            $values['activationkey'     ] = $row['user_activationkey'   ];
-            $values['activationdate'    ] = $row['user_activationdate'  ];
-            $values['image'             ] = $row['user_image'           ];       
+            $values['id'                ] = $row['user_id'         ];
+            $values['surname'           ] = $row['surname'         ];
+            $values['firstname'         ] = $row['firstname'       ];
+            $values['email'             ] = $row['email'           ];
+            $values['username'          ] = $row['username'        ];
+            $values['password'          ] = $row['password'        ];
+            $values['gender'            ] = $row['gender'          ];
+            $values['description'       ] = $row['description'     ];
+            $values['website'           ] = $row['website'         ];
+            $values['createddate'       ] = $row['createddate'     ];
+            $values['modifieddate'      ] = $row['modifieddate'    ];
+            $values['deleteddate'       ] = $row['deleteddate'     ];
+            $values['lastloggedindate'  ] = $row['lastloggedindate'];
+            $values['activationkey'     ] = $row['activationkey'   ];
+            $values['activationdate'    ] = $row['activationdate'  ];
+            $values['avatar'            ] = $row['avatar'          ];       
+            $values['answers'           ] = $row['answers'         ];       
            
         }
 

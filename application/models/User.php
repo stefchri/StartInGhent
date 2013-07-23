@@ -32,7 +32,7 @@ class Application_Model_User
      *
      * @var enum('m','f')
      */
-    protected $_sex;
+    protected $_gender;
     /**
      * User description
      *
@@ -84,9 +84,15 @@ class Application_Model_User
     /**
      * User image
      *
-     * @var BIGINT
+     * @var string
      */
-    protected $_image;
+    protected $_avatar;
+     /**
+     * User answers
+     *
+     * @var jsonstring
+     */
+    protected $_answers;
     /**
      * User name
      *
@@ -204,12 +210,12 @@ class Application_Model_User
         $this->_email = $email;
     }
 
-    public function getSex() {
-        return $this->_sex;
+    public function getGender() {
+        return $this->_gender;
     }
 
-    public function setSex($sex) {
-        $this->_sex = $sex;
+    public function setGender($gender) {
+        $this->_gender = $gender;
     }
 
     public function getDescription() {
@@ -276,15 +282,19 @@ class Application_Model_User
         $this->_activationdate = $activationdate;
     }
 
-    public function getImage() {
-        return $this->_image;
+    public function getAvatar() {
+        return $this->_avatar;
     }
 
-    public function setImage($image) {
-        $this->_image = $image;
+    public function setAvatar($avatar) {
+        $this->_avatar = $avatar;
     }
     
-   
+    public function getAnswers() {
+        return $this->_answers;
+    }
 
-    
+    public function setAnswers($answers) {
+        $this->_answers = $answers;
+    }
 }

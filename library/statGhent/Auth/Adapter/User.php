@@ -7,14 +7,13 @@ class statGhent_Auth_Adapter_User extends Zend_Auth_Adapter_DbTable
     {
         parent::__construct();
         $this->setTableName('users') 
-             ->setIdentityColumn('user_username')
-             ->setCredentialColumn('user_password')
-             ->setIdentity($username)
-             ->setCredential($password)
-             //->setCredentialTreatment('sha1(?)')
-             ->getDbSelect()->where('user_activationdate IS NOT NULL')
-             //               ->where('adm_deleted = FALSE')
+                ->setIdentityColumn('username')
+                ->setCredentialColumn('password')
+                ->setIdentity($username)
+                ->setCredential($password)
+                
+                //->where('activationdate IS NOT NULL')
+                //->where('deleteddate IS NULL')
         ;
-        //Zend_Debug::dump($this->getDbSelect()->assemble()); exit;
     }
 }

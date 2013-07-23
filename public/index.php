@@ -1,5 +1,8 @@
 <?php
 
+defined('PUBLIC_PATH')
+|| define('PUBLIC_PATH', realpath(dirname(__FILE__)));
+
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
@@ -14,6 +17,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+require_once getcwd() . '/config/config.php';
 /** Zend_Application */
 require_once 'Zend/Application.php';
 

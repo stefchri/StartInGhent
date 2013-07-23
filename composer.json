@@ -1,7 +1,14 @@
 {
+    "name": "vendor/start-in-ghent",
+    "description": "Description of project StartInGhent.",
+    "authors": [
+        {
+            "name": "Stefaan Christiaens",
+            "email": "stefaan.ch@gmail.com"
+        }
+    ],
     "require": {
         "slim/slim": "2.*",
-        "intervention/image": "dev-master",
         "phpmailer/phpmailer": "dev-master"
     }
 }

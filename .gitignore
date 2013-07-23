@@ -1,4 +1,5 @@
-/config
+/public/config
+/public/images
 /vendor
 composer.phar
 composer.lock

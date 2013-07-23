@@ -11,7 +11,8 @@ function getData(el){
     var url = window.location.pathname;
     url = url.substring(0, url.length-1);
     var tags = url.split('/');
-   
+    console.log("i do work");
+    console.log(tags);
     if (tags[tags.length-1] == "public") {
         
        
