@@ -27,7 +27,7 @@ class AccountController extends Zend_Controller_Action
                 $adapter = new statGhent_Auth_Adapter_User($user->getUsername(),
                                                       $user->getPassword());
                                                            
-                //Zend_Debug::dump($adapter);exit();
+                
                 $this->_auth->authenticate($adapter);
 
                 if ($this->_auth->hasIdentity() ) {
@@ -133,7 +133,7 @@ class AccountController extends Zend_Controller_Action
                             $mail->addTo($user->getEmail());
                             $mail->setSubject('startInGhent | Activationlink');
                             $mail->send($transport);
-                            //var_dump('oleeee');exit();
+                            
                             return $this->redirect('account/login');
                         }
                         else {
@@ -216,15 +216,12 @@ class AccountController extends Zend_Controller_Action
 
         if ($request->isGet() ) {
             $val = $this->getRequest();
-            //Zend_Debug::dump($_GET['id'] . $_GET['key']);exit();
             $id = $_GET['id'];
             $key = $_GET['key'];
             $userM = new Application_Model_UserMapper();
             try {
                 $user = new Application_Model_User($userM->read($id));
-               // Zend_Debug::dump($user);exit();
                if ($user->getActivationkey() == $key && $user->getActivationdate() == null) {
-                    //Zend_Debug::dump('jes');die();
                     $now = new DateTime('now');
                     $nowF = $now->format('Y-m-d H:i:s');
                     $activationdate = $nowF;
@@ -261,55 +258,69 @@ class AccountController extends Zend_Controller_Action
                 $values = $form->getValues();
                 
                 $userM = new Application_Model_UserMapper();
-                Zend_Debug::dump($values);
-                $user = new Application_Model_User($userM->readWithvalue('user_email', $values["email"]));
-                if ($user->getUsername() == $values["username"]) {
-                    $pass = statGhent_Utility::randomString(6);
-                    $user->setPasswordraw($pass);
+                
+                try{
+                    $user = new Application_Model_User($userM->readWithvalue('email', trim($values["email"])));
                     
-                    $now = new DateTime('now');
-                    $modifieddate = $now->format('Y-m-d H:i:s');
-                    $user->setModifieddate($modifieddate);
-                    
-                    $userM->save($user);
-                    
-                    $config = array('auth' => 'login',
-                                            'username' => 'statGhent@gmail.com',
-                                            'password' => START_IN_GHENT_PWD,
-                                            'ssl' => 'tls',
-                                            'port' =>'465');
+                    if ($user->getUsername() == trim($values["username"])) {
+                        $pass = statGhent_Utility::randomString(6);
+                        $user->setPasswordraw($pass);
 
-                    $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+                        $now = new DateTime('now');
+                        $modifieddate = $now->format('Y-m-d H:i:s');
+                        $user->setModifieddate($modifieddate);
 
-                    $html = "<table style='width:60%; margin-left:5%'>
+                        $userM->save($user);
 
-                        <tr>
-                                <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>FORGOT PASSWORD MAIL STARTINGHENT</th>
+                        $config = array('auth' => 'login',
+                                             'username' => 'statGhent@gmail.com',
+                                             'password' => START_IN_GHENT_PWD,
+                                             'ssl' => 'tls',
+                                             'port' => '587');
 
-                        </tr>
-                        <tr style='height:80px;'>
+                        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 
-                            <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Hello " . $user->getUsername() . "!</td>
-                        </tr>
-                        <tr style='height:40px;'>
+                        $html = "<table style='width:60%; margin-left:5%'>
 
-                            <td colspan='5'>Your new password is <em>". $pass ."</em>.</td>
-                        </tr>
-                        <tr style='height:40px;'>
+                            <tr>
+                                    <th colspan='5' height='100px;' style='border-bottom:1px solid #3a3a3a;'>FORGOT PASSWORD MAIL STARTINGHENT</th>
 
-                            <td colspan='5'>You can change this on the edit profile page.</td>
-                        </tr>
+                            </tr>
+                            <tr style='height:80px;'>
 
-                        </table>
-                    ";
+                                <td colspan='5' style='font:Verdana, Geneva, sans-serif; font-weight:bold;font-size:24px;'>Hello " . $user->getUsername() . "!</td>
+                            </tr>
+                            <tr style='height:40px;'>
 
-                    $mail = new Zend_Mail();
-                    $mail->setBodyHtml($html);
-                    $mail->setFrom('statGhent@gmail.com');
-                    $mail->addTo($user->getEmail());
-                    $mail->setSubject('statGhent | Activationlink');
-                    $mail->send($transport);
-                    return $this->redirect('account/login');
+                                <td colspan='5'>Your new password is <em>". $pass ."</em>.</td>
+                            </tr>
+                            <tr style='height:40px;'>
+
+                                <td colspan='5'>You can change this on the edit profile page.</td>
+                            </tr>
+
+                            </table>
+                        ";
+
+                        $mail = new Zend_Mail();
+                        $mail->setBodyHtml($html);
+                        $mail->setFrom('statGhent@gmail.com');
+                        $mail->addTo($user->getEmail());
+                        $mail->setSubject('startInGhent | New Password');
+                        $mail->send($transport);
+                        return $this->redirect('account/login');
+                    }
+                    else{
+                        $view->assign('error', "The username provided does not match the username of the profile found with the povided email.");
+                    }
+                }
+                catch (Zend_Mail_Exception $e)
+                {
+                    throw new Zend_Mail_Exception($e);
+                }
+                catch (Exception $e)
+                {
+                   $view->assign('error', "No user found with the provided email. " . $e); 
                 }
             }
         }
@@ -319,7 +330,6 @@ class AccountController extends Zend_Controller_Action
     public function logoutAction()
     {
         $this->_auth->clearIdentity();
-
         return $this->redirect('index');
     }
 

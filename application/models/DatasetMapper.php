@@ -28,7 +28,6 @@ class Application_Model_DatasetMapper
             return $this->_dbTable->insert($data);
         } else {
             $data['dataset_id'] = $dataset->getId();
-            Zend_Debug::dump($data);
             $this->_dbTable->update($data);
         }
     }

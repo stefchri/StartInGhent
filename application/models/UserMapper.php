@@ -41,8 +41,7 @@ class Application_Model_UserMapper
             return $this->_dbTable->insert($data);
         } else {
             $data['user_id'] = $user->getId();
-            Zend_Debug::dump($data);
-            $this->_dbTable->update($data);
+            $this->_dbTable->update($data,"");
         }
     }
 

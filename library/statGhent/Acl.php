@@ -14,36 +14,25 @@ class statGhent_Acl extends Zend_Acl
              ->addRole(self::ROLE_USER , array(self::ROLE_GUEST))
              ->allow(  self::ROLE_GUEST                         )
              ->_addModuleDefault()
+             ->_addAPIModule()
         ;
     }
-
+    
+    protected function _addAPIModule()
+    {
+        $r = array();
+        $r['error'] = self::getResource('error', 'api');
+        $r['dataset'] = self::getResource('dataset', 'api');
+        
+        $this->addResources($r);
+        
+         return $this->allow(self::ROLE_GUEST, $r['error'])
+                    ->allow(self::ROLE_GUEST, $r['dataset'])
+        ;
+    }
+    
     protected function _addModuleDefault()
     {
-//        $r = array();
-//        $r['index'] = self::getResource('index');
-//        $r['error'] = self::getResource('error');
-//
-//        $p = array();
-//        //$p['edit'    ] = self::getPrivilege('edit'    );
-//        $p['index'   ] = self::getPrivilege('index');
-//        $p['error'   ] = self::getPrivilege('error');
-//        //$p['login'   ] = self::getPrivilege('login'   );
-//        //$p['logout'  ] = self::getPrivilege('logout'  );
-//        //$p['register'] = self::getPrivilege('register');
-//
-//        $this->addResources($r)
-//             ->allow(self::ROLE_GUEST, $r['index'], array(
-//                 $p['index'   ],
-//                 $p['error'   ],
-//                 //$p['register'],
-//             ))
-//             ->allow(self::ROLE_USER, $r['index'], array(
-//                 $p['index'    ],
-//             ))
-//             ->deny( self::ROLE_GUEST, $r['index'], array(
-//                 //$p['login'   ],
-//                 //['register'],
-//             ))
         $r = array();
         $r['error'] = self::getResource('error');
         $r['index'] = self::getResource('index');
