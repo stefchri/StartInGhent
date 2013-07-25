@@ -8,4 +8,4 @@ StartInGent
 StartInGhent is a webapplication for people moving to Ghent. 
 With this tool they can find out in what neighbourhood they would fit best.
 
-Made with PHP Zend Framework 1.12 and Slim framework for the API.
+Made with PHP Zend Framework 1.12 and codeinchaos/restful-zend-framework for the API in Zend
