@@ -135,12 +135,13 @@ class REST_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
                     }
 
                     if ($this->_currentContext == 'json') {
-                        $callback = $this->getRequest()->getParam('jsonp-callback', false);
+                        $callback = $this->getRequest()->getParam('callback', false);
 
                         if ($callback !== false and !empty($callback)) {
                             $body = sprintf('%s(%s)', $callback, $body);
                         }
                     }
+               
 
                     $this->getResponse()->setBody($body);
                 }

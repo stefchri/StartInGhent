@@ -8,20 +8,17 @@ class REST_Controller_Plugin_RestHandler extends Zend_Controller_Plugin_Abstract
 {
     private $dispatcher;
 
-    private $defaultFormat = 'html';
+    private $defaultFormat = 'json';
 
     private $reflectionClass = null;
 
     private $acceptableFormats = array(
-        'html',
         'xml',
         'php',
         'json'
     );
 
     private $responseTypes = array(
-        'text/html'                         => 'html',
-        'application/xhtml+xml'             => 'html',
         'text/xml'                          => 'xml',
         'application/xml'                   => 'xml',
         'application/xhtml+xml'             => 'xml',
@@ -71,15 +68,18 @@ class REST_Controller_Plugin_RestHandler extends Zend_Controller_Plugin_Abstract
         if ($this->isRestClass($class)) {
             // set config settings from application.ini
             $this->setConfig();
-
+            
             // set response format
-            $this->setResponseFormat($request);
+            //$this->setResponseFormat($request);
+            //AUTOMATICALLY ONLY SET TO JSON 
+            $request->setParam('format', 'json');
 
             // process requested action
             $this->handleActions($request);
 
             // process request body
             $this->handleRequestBody($request);
+            
         }
     }
 
@@ -106,17 +106,19 @@ class REST_Controller_Plugin_RestHandler extends Zend_Controller_Plugin_Abstract
 
         // check query string first
         if (in_array($request->getParam('format', 'none'), $this->responseTypes)) {
+            //Zend_Debug::dump($request->getParam('format'));exit();
             $format = $request->getParam('format');
         } else {
             $bestMimeType = $this->negotiateContentType($request);
 
-            // if there's no matching MimeType, assign default XML
+            // if there's no matching MimeType, assign default JSON
             if (!$bestMimeType || $bestMimeType == '*/*') {
-                $bestMimeType = 'application/xml';
+                $bestMimeType = 'application/json';
             }
-
             $format = $this->responseTypes[$bestMimeType];
         }
+        $format = 'json';
+        
         if ($format === false or !in_array($format, $this->acceptableFormats)) {
             $request->setParam('format', $this->defaultFormat);
 
@@ -366,7 +368,7 @@ class REST_Controller_Plugin_RestHandler extends Zend_Controller_Plugin_Abstract
 
         // divide it into parts in the place of a ","
         $types = explode(',', $string);
-
+        
         foreach ($types as $type) {
             // the default quality is 1.
             $quality = 1;
