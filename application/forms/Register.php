@@ -120,15 +120,6 @@ class Application_Form_Register extends Zend_Form
                     ->setAttrib('class', 'ui-input-text ui-body-c ui-corner-all ui-shadow-inset')
                     ->setOrder(8);
         ;
-        $website = new Zend_Form_Element_Text('website');
-        $website     
-                    ->addFilter('StringTrim')
-                    ->setAttrib('id','register-website')
-                    ->setAttrib('placeholder','Website')
-                    ->setAttrib('tabindex', '9')
-                    ->setAttrib('class', 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
-                    ->setOrder(9);
-        ;
         
         $avatar = new Zend_Form_Element_File('avatar');
         $avatar     ->setLabel('Avatar (Max 500KB, png or jpeg)')
@@ -167,7 +158,6 @@ class Application_Form_Register extends Zend_Form
              ->addElement($email )
              ->addElement($gender )
              ->addElement($description )
-             ->addElement($website )
              ->addElement($avatar )
              ->addElement($submit )
         ;

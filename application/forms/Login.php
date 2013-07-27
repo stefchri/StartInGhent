@@ -55,7 +55,7 @@ class Application_Form_Login extends Zend_Form
         $view = Zend_Layout::getMvcInstance()->getView();
 
        
-        $this->setOptions(array('id' => 'view-login'))
+        $this->setOptions(array('id' => 'login'))
              ->setDecorators(array('FormElements', 'Form'))
              ->setMethod('post')
              ->setAction('')

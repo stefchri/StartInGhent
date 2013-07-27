@@ -2,7 +2,9 @@
 
 class ProfileController extends Zend_Controller_Action
 {
+
     protected $_auth = null;
+
     public function init()
     {
         $this->_auth = Zend_Auth::getInstance();
@@ -22,7 +24,6 @@ class ProfileController extends Zend_Controller_Action
         $view->assign('email',$user->getEmail());
         $view->assign('gender',$user->getGender());
         $view->assign('description',$user->getDescription());
-        $view->assign('website',$user->getWebsite());
         
         $view->assign('avatar',$user->getAvatar());
     }
@@ -90,7 +91,7 @@ class ProfileController extends Zend_Controller_Action
                 $url = join("/",explode("\\",$url));
                 $url = explode("htdocs/", $url)[1];
                 //Zend_Debug::dump($_SERVER);exit();
-                $view->assign('image',"http://" . $_SERVER["HTTP_HOST"] . "/" . $url);
+                $view->assign('image', "http://" . $_SERVER["HTTP_HOST"] . "/" . $url);
                 $view->assign('hasimage', true);
             }
             else
@@ -102,7 +103,6 @@ class ProfileController extends Zend_Controller_Action
             $users['surname'] = $user->getSurname();
             $users['gender'] = $user->getGender();
             $users['description'] = $user->getDescription();
-            $users['website'] = $user->getWebsite();
             $users['email'] = $user->getEmail();
             
             $form->populate($users);
@@ -134,7 +134,6 @@ class ProfileController extends Zend_Controller_Action
                     $user->setEmail($val["email"]);
                     $user->setGender($val["gender"]);
                     $user->setDescription($val["description"]);
-                    $user->setWebsite($val["website"]);
                     $modifiedd = new DateTime('now', new DateTimeZone('UTC'));
                     $modifiedd = $modifiedd->format('Y-m-d H:i:s');
                     $user->setModifieddate( $modifiedd );
@@ -177,7 +176,15 @@ class ProfileController extends Zend_Controller_Action
         }
         $view->form = $form;
     }
+
+    public function listAction()
+    {
+        $view = $this->view;
+        
+        $auth = Zend_Auth::getInstance();
+        $userM = new Application_Model_UserMapper();
+        $users = $userM->fetchAll();
+       
+        $view->assign('users',$users);
+    }
 }
-
-
-

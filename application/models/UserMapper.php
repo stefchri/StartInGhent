@@ -26,7 +26,6 @@ class Application_Model_UserMapper
                       'password'           => $user->getPassword(),
                       'gender'             => $user->getGender(),
                       'description'        => $user->getDescription(),
-                      'website'            => $user->getWebsite(),
                       'createddate'        => $user->getCreateddate(),
                       'modifieddate'       => $user->getModifieddate(),
                       'deleteddate'        => $user->getDeleteddate(),
@@ -61,7 +60,6 @@ class Application_Model_UserMapper
                                     'password'          => 'password',
                                     'gender'            => 'gender',
                                     'description'       => 'description',
-                                    'website'           => 'website',
                                     'createddate'       => 'createddate',
                                     'modifieddate'      => 'modifieddate',
                                     'deleteddate'       => 'deleteddate',
@@ -97,7 +95,6 @@ class Application_Model_UserMapper
                                     'password'          => 'password',
                                     'gender'            => 'gender',
                                     'description'       => 'description',
-                                    'website'           => 'website',
                                     'createddate'       => 'createddate',
                                     'modifieddate'      => 'modifieddate',
                                     'deleteddate'       => 'deleteddate',
@@ -148,7 +145,6 @@ class Application_Model_UserMapper
             $values['password'          ] = $row['password'        ];
             $values['gender'            ] = $row['gender'          ];
             $values['description'       ] = $row['description'     ];
-            $values['website'           ] = $row['website'         ];
             $values['createddate'       ] = $row['createddate'     ];
             $values['modifieddate'      ] = $row['modifieddate'    ];
             $values['deleteddate'       ] = $row['deleteddate'     ];

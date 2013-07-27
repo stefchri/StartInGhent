@@ -71,7 +71,6 @@ class AccountController extends Zend_Controller_Action
                 $user->setEmail($val["email"]);
                 $user->setGender($val["gender"]);
                 $user->setDescription($val["description"]);
-                $user->setWebsite($val["website"]);
                 $user->setActivationkey(statGhent_Utility::randomString(64));
                 $now = new DateTime('now');
                 $createdd = $now->format('Y-m-d H:i:s');

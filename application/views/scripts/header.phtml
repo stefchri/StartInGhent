@@ -31,7 +31,8 @@
                    class="btn btn-primary"><?php echo ucfirst($username) ?></a>
                 <a href="<?php echo $this->url(array('controller'=>'account', 'action' => 'logout'), 'default', true) ?>" 
                    class="btn btn-secondary">Logout</a>
-                    
+                <a href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'list'), 'default', true) ?>" 
+                   class="btn btn-secondary">People</a>
             <?php else: ?>
             
                 <a href="<?php echo $this->url(array('controller'=>'account', 'action' => 'login'),'default',true) ?>"

@@ -1,0 +1,20 @@
+<div id="list">
+    
+    <?php foreach ($this->users as $user): ?>
+    <section class="user">
+        <h3><?php echo $user->getUsername(); ?></h3>
+        <p><?php echo $user->getFirstname(); ?> <?php echo $user->getSurname(); ?></p>
+        <p><?php echo $user->getEmail(); ?></p>
+        <p><?php echo $user->getDescription(); ?></p>
+        <p>Joined <?php echo $user->getCreateddate(); ?></p>
+        <img src="http://<?php 
+            $url = PUBLIC_PATH . "/images/" . $user->getAvatar();
+            $url = join("/",explode("\\",$url));
+            $url = explode("htdocs/", $url)[1];
+            echo ($_SERVER["HTTP_HOST"] . "/" . $url);
+        ?>" />
+        
+    </section>
+    <?php endforeach;?>
+    
+</div>

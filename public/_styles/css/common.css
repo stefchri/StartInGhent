@@ -13,12 +13,11 @@ a {
 	padding: 5px 10px;
 	border-radius: 2px;
 	text-decoration: underline;
-	color: #fff;
+	color: #6a6a6a;
 }
 
 a:hover, a:focus, a:active {
 	text-decoration: none;
-	background: rgba(0, 0, 0, 0.8);
 }
 a.logo:hover{
         background: none !important;

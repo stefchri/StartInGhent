@@ -28,7 +28,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
              ->appendStylesheet($view->baseUrl('_styles/css/tablet.css'), 'all and (min-width: 481px) and (max-width: 1024px)')
              ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap/bootstrap.css'), 'all and (min-width: 481px) and (max-width: 1024px)')
              ->appendStylesheet($view->baseUrl('_styles/css/mobile.css'), 'all and (max-width: 481px)')
-             ->appendStylesheet($view->baseUrl('_styles/css/_libs/jqmobile/jquery.mobile-1.2.0.min.css'), 'all and (max-width: 481px)')
              
         ;
         $view->headScript()
@@ -37,7 +36,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $view->inlineScript()
              ->appendFile('http://code.jquery.com/jquery-latest.js')
-             ->appendFile($view->baseUrl('_scripts/_libs/jqmobile/jquery.mobile-1.2.0.min.js'))
              ->appendFile($view->baseUrl('_scripts/_libs/bootstrap/bootstrap.min.js'))
              ->appendFile($view->baseUrl('_scripts/js/geolocation.js'))
              ->appendFile($view->baseUrl('_scripts/js/statGhent.js'))

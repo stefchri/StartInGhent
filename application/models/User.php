@@ -22,12 +22,6 @@ class Application_Model_User
      */
     protected $_surname;
     /**
-     * User email
-     *
-     * @var string
-     */
-    protected $_email;
-    /**
      * User gender
      *
      * @var enum('m','f')
@@ -224,14 +218,6 @@ class Application_Model_User
 
     public function setDescription($description) {
         $this->_description = $description;
-    }
-
-    public function getWebsite() {
-        return $this->_website;
-    }
-
-    public function setWebsite($website) {
-        $this->_website = $website;
     }
 
     public function getCreateddate() {
