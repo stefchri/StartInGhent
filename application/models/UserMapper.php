@@ -40,8 +40,9 @@ class Application_Model_UserMapper
         if (null === $user->getId()) {
             return $this->_dbTable->insert($data);
         } else {
-            $data['user_id'] = $user->getId();
-            $this->_dbTable->update($data);
+            //$data['user_id'] = $user->getId();
+            $where = $this->_dbTable->getAdapter()->quoteInto('user_id = ?', $user->getId());
+            $this->_dbTable->update($data, $where);
         }
     }
 
