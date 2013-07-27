@@ -20,14 +20,16 @@ class statGhent_Acl extends Zend_Acl
     
     protected function _addAPIModule()
     {
+        
         $r = array();
         $r['error'] = self::getResource('error', 'api');
         $r['dataset'] = self::getResource('dataset', 'api');
+        $r['user'] = self::getResource('user', 'api');
         
         $this->addResources($r);
-        
          return $this->allow(self::ROLE_GUEST, $r['error'])
                     ->allow(self::ROLE_GUEST, $r['dataset'])
+                    ->allow(self::ROLE_GUEST, $r['user'])
         ;
     }
     

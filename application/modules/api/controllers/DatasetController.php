@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Stefaan Christiaens <stefaan.ch@gmail.com>
+ */
 class Api_DatasetController extends REST_Controller
 {
     /**
@@ -17,14 +19,23 @@ class Api_DatasetController extends REST_Controller
         if (empty($result)) {
             $this->view->message = "No datasets found.";
         }
+        //Zend_Debug::dump($result);exit();
+        foreach ($result as $key => $l) {
+            $json = $l["value"];
+            $jsonbetter = json_decode($json);
+            unset($l["value"]);
+            $l["value"] = $jsonbetter;
+            unset($result[$key]);
+            $result[$key] = $l;
+        }
+        
+        
         $this->view->datasets = $result;
         $this->_response->ok();
     }
-
+    
     /**
-     * The head action handles HEAD requests; it should respond with an
-     * identical response to the one that would correspond to a GET request,
-     * but without the response body.
+     * Get the headers for the GET command, no body
      */
     public function headAction()
     {
@@ -32,9 +43,7 @@ class Api_DatasetController extends REST_Controller
     }
 
     /**
-     * The get action handles GET requests and receives an 'id' parameter; it
-     * should respond with the server resource state of the resource identified
-     * by the 'id' value.
+     * Get a single dataset by id
      */
     public function getAction()
     {
@@ -54,6 +63,7 @@ class Api_DatasetController extends REST_Controller
         if (empty($result)) {
             $this->view->message = "No dataset found with provided id.";
         }  else {
+            //Zend_Debug::dump($result);exit();
             $json = $result["value"];
             $jsonbetter = json_decode($json);
             unset($result["value"]);

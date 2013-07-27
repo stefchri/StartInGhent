@@ -12,7 +12,7 @@ class statGhent_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     public function __construct()
     {
         $session = new Zend_Session_Namespace('statGhent_acl');
-
+        
         if ( isset($session->acl) ) {
             $this->_acl = $session->acl;
         } else
@@ -38,6 +38,7 @@ class statGhent_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
                                          $request->getModuleName());
         
         $privilege = statGhent_Acl::getPrivilege($request->getActionName());
+        
         
         if ($this->_acl->isAllowed($role, $resource, $privilege)) {
             return true;

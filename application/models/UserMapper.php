@@ -41,7 +41,7 @@ class Application_Model_UserMapper
             return $this->_dbTable->insert($data);
         } else {
             $data['user_id'] = $user->getId();
-            $this->_dbTable->update($data,"");
+            $this->_dbTable->update($data);
         }
     }
 
