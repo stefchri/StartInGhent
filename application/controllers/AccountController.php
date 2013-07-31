@@ -15,7 +15,7 @@ class AccountController extends Zend_Controller_Action
         $form = new Application_Form_Login();
 
         $view = $this->view;
-        $view->title = 'Login';
+        $view->headTitle("Login");
 
         $request = $this->getRequest();
 
@@ -36,6 +36,15 @@ class AccountController extends Zend_Controller_Action
                     $this->_auth->getStorage()->write(array('role' => statGhent_Acl::ROLE_USER,
                                                             'id'   => (int) $user_data->user_id,
                                               ));
+                    $userM = new Application_Model_UserMapper();
+                    $u = new Application_Model_User($userM->read($user_data->user_id));
+                    $now = new DateTime('now');
+                    $logind = $now->format('Y-m-d H:i:s');
+                    $u->setLastloggedindate($logind);
+                    
+                    $userM->save($u);
+                    
+                    
                     return $this->redirect('profile/index');
                 } else {
                     $view->error = "Authentication failed";
@@ -52,7 +61,7 @@ class AccountController extends Zend_Controller_Action
         $form = new Application_Form_Register();
 
         $view = $this->view;
-        $view->title = 'Register';
+        $view->headTitle("Register");
 
         $request = $this->getRequest();
 
@@ -248,7 +257,7 @@ class AccountController extends Zend_Controller_Action
     {
         $form = new Application_Form_Forgotpassword();
         $view = $this->view;
-        $view->title = "Forgot Password";
+        $view->headTitle("Forgot Password");
 
         $request = $this->getRequest();
 

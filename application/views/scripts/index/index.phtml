@@ -1,27 +1,48 @@
-<section id="content">
-    <div id="choose-data">
-        <h3>[ CHOOSE YOUR DATA ]</h3>
-        <ul>
-            <li><a href="#" title="Basisscholen" onclick="getData(1)">Primary schools</a></li>
-            <li><a href="#" title="Ziekenhuizen" onclick="getData(2)">Hospitals</a></li>
-            <li><a href="#" title="Bioscopen" onclick="getData(3)">Cinemas</a></li>
-            <li><a href="#" title="Dierenartsen" onclick="getData(4)">Veterinary practices</a></li>
-            <li><a href="#" title="Kotzones" onclick="getData(5)">Zones of studenthousing</a></li>
-            <li><a href="#" title="Parkings" onclick="getData(6)">Parkings</a></li>
-            <li><a href="#" title="Secundaire schoole" onclick="getData(7)">High schools</a></li>
-            <li><a href="#" title="Gezondheidscentra" onclick="getData(8)">Health infrastructures</a></li>
-            <li><a href="#" title="Bibliotheken" onclick="getData(9)">Libraries</a></li>
-            <li><a href="#" title="Apotheken" onclick="getData(10)">Pharmacies</a></li>
-        </ul>
-    </div>
-    <div id="show-data">
-        <h3>[ YOUR DATA ]</p>
-        <div id="output">
-            <div id="map_canvas" style="width:97%;height:300px;"></div>
+<div class="span12 centered firstblock clearfix">
+    <div class="row">
+        <div class="span6">
+            <h1>Discover where to start</h1>
+            <p class="lead lead-push">
+                Moving to Ghent?<br/>
+                Here you can find where you really belong.
+            </p>
+        </div>
+
+        <div class="span6 clearfix">
+            <h1>Get started</h1>
+            <div class="buttons-push">
+                <a class="left content-pill" title="Register" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'register'),'default',true) ?>">Register</a>
+                <a class="left lead" href="<?php echo $this->url(array('controller'=>'index', 'action' => 'answers'),'default',true) ?>" title="Find your ideal location">Find your ideal location</a>
+            </div>
         </div>
     </div>
-</section>
-              
-<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqsjbo0JTyqexEzIBOYcolZlo5SBUGrHc&sensor=true">
-</script>
+</div>
+<hr class="line" />
+<div class="span12 centered clearfix">
+    <div class="row">
+        <div class="span12">
+            <h1>Created in assignment of the Artevelde University College Ghent</h1>
+            <div class="row">
+                <div  class="span6 lead lead-push">
+                    <strong>The assignment</strong><br/>
+                    Create an opensource rich internet application using open data of Ghent. Search interesting links between these sets of data and crosslink them.
+                </div>
+                <div  class="span6 lead lead-push">
+                    <strong>The result</strong><br/>
+                    A web application people can use to find a perfect and suitable location to live in Ghent. 
+                </div>
+            </div>
+            <div class="row">
+                <div  class="span6 lead lead-push">
+                    <strong>Technologies used</strong><br/>
+                    PHP with Zend Framework 1.12 MVC and a RESTful API based on <a href="https://github.com/codeinchaos/restful-zend-framework">codeinchaos' restful-zend-framework</a>. Frontend Twitter Bootstrap, jQuery, HTML5 and CSS3 were used.
+                </div>
+                <div  class="span6 lead lead-push">
+                    <strong>Experience</strong><br/>
+                    Being fairly new to Zend, this wasn't an easy task. Thanks to my coding skills I swiftly learned to use the framework.<br/>
+                    I am very happy with the result!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

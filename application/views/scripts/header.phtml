@@ -15,32 +15,29 @@
         $loggedin = false;;
     }
 ?>
-
 <header>
-    <div id="logo">
-        <h1><a class="logo" href="<?php 
-            echo $this->url( array('controller'=>'index', 'action' => 'index'),'default',true) 
-        ?>" title="StatGhent Home">[startInGhent]</a></h1>
+    <div class="span12 centered">
+        <div class="row">
+            <div class="span6">
+                <div id="logo"><a href="<?php echo $this->url(array('controller'=>'index', 'action' => 'index'),'default',true) ?>" title="Home StartInGhent"></a></div>
+            </div>
+
+            <div class="span6 navigation clearfix">
+                <ul class="nav nav-pills pull-right">
+                    <?php if($loggedin): ?>
+
+                        <li><a title="Profile" href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'index'),'default',true) ?>"><?php echo ucfirst($username) ?></a></li>
+                        <li><a title="Logout" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'logout'), 'default', true) ?>">Logout</a></li>
+                        <li><a title="People" href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'list'), 'default', true) ?>">People</a></li>
+                        
+                    <?php else: ?>
+
+                        <li><a title="Login" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'login'),'default',true) ?>">Login</a></li>
+                        <li><a title="Register" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'register'), 'default', true) ?>">Register</a></li>
+
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
     </div>
-    
-    <section id="nav-desktop">
-        <div id="buttons-header">
-            <?php if($loggedin): ?>
-            
-                <a href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'index'),'default',true) ?>"
-                   class="btn btn-primary"><?php echo ucfirst($username) ?></a>
-                <a href="<?php echo $this->url(array('controller'=>'account', 'action' => 'logout'), 'default', true) ?>" 
-                   class="btn btn-secondary">Logout</a>
-                <a href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'list'), 'default', true) ?>" 
-                   class="btn btn-secondary">People</a>
-            <?php else: ?>
-            
-                <a href="<?php echo $this->url(array('controller'=>'account', 'action' => 'login'),'default',true) ?>"
-                   class="btn btn-primary btn-login">Login</a>
-                <a href="<?php echo $this->url(array('controller'=>'account', 'action' => 'register'), 'default', true) ?>" 
-                   class="btn btn-secondary btn-register">Register</a>
-            
-            <?php endif; ?>
-         </div>
-     </section> 
 </header>

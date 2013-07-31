@@ -12,14 +12,22 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->view->headTitle("Home");
         //Do nothing but show some information from view
     }
 
     public function answerAction()
+    {
+        $this->view->headTitle("Answer");
+    }
+
+    public function aboutAction()
     {
         // action body
     }
 
 
 }
+
+
 

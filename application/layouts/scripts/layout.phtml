@@ -1,28 +1,28 @@
-<?php echo $this->doctype() . "\n"; ?>
+<?php echo   $this->doctype() . "\n"; ?>
 <html lang="en" >
     <head>
-        <?php 
-            echo $this->headMeta() . "\n" 
-            . $this->headTitle() . "\n" 
-            . $this->headLink() . "\n" 
-            . $this->headScript() . "\n" ;
-        ?>
+    <?php 
+        echo $this->headMeta() . "\n" 
+           . $this->headTitle() . "\n" 
+           . $this->headLink() . "\n" 
+           . $this->headScript() . "\n" ;
+    ?>
+        <!--[if !IE 7]>
+            <style type="text/css">
+                    #footerwrap {display:table;height:100%}
+            </style>
+        <![endif]-->
     </head>
     <body>
+        <div id="footerwrap">
     <?php 
-        echo  $this->render('header.phtml') . "\n"; 
+        echo $this->render('header.phtml') . "\n"; 
+        echo "<div id='main'>" . $this->layout()->content . "</div>" . "\n"; 
     ?>
-        
-        <div id="container">
-            
-    <?php echo
-        $this->layout()->content . "\n" . $this->render('disclaimer.phtml'); 
-    ?>
-            
         </div>
-        <div id="overlay"></div>
-    <?php echo
-        $this->render('footer.phtml') . $this->inlineScript() ."\n";
+    <?php
+        echo $this->render('footer.phtml') ."\n". 
+             $this->inlineScript() ."\n";
     ?>
     </body>
 </html>

@@ -17,6 +17,7 @@ class ProfileController extends Zend_Controller_Action
         $userM = new Application_Model_UserMapper();
         $user = new Application_Model_User($userM->read($id));
         $view = $this->view;
+        $view->headTitle("Profile");
         
         $view->assign('username',$user->getUsername());
         $view->assign('firstname',$user->getFirstname());
@@ -30,6 +31,7 @@ class ProfileController extends Zend_Controller_Action
 
     public function editAction()
     {
+        $this->view->headTitle("Edit Profile");
         $form = new Application_Form_Register();
         $form->getElement("submit")->setLabel("Change");
         $form->getElement("passwordraw")->clearValidators()->setAllowEmpty(true)->setRequired(false)->setOrder(17);
@@ -180,6 +182,7 @@ class ProfileController extends Zend_Controller_Action
     public function listAction()
     {
         $view = $this->view;
+        $view->headTitle("Users");
         
         $auth = Zend_Auth::getInstance();
         $userM = new Application_Model_UserMapper();

@@ -12,34 +12,36 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $view->doctype('HTML5'); 
         $view->headMeta()
-             ->setCharset('utf-8')
-             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->setCharset('utf-8')
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
         ;
 
-        $view->headTitle($view->title, 'PREPEND')
-             ->setDefaultAttachOrder('PREPEND')
-             ->setSeparator(' | ')
+        $view
+            ->headTitle('StartInGhent', $view->title)
+            ->setDefaultAttachOrder('PREPEND')
+            ->setSeparator(' | ')
         ;
 
         $view->headLink() 
-             ->appendStylesheet($view->baseUrl('_styles/css/_libs/reset/reset.css'), 'all')
-             ->appendStylesheet($view->baseUrl('_styles/css/common.css'), 'all')
-             ->appendStylesheet($view->baseUrl('_styles/css/main.css'), 'screen,projection')
-             ->appendStylesheet($view->baseUrl('_styles/css/tablet.css'), 'all and (min-width: 481px) and (max-width: 1024px)')
-             ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap/bootstrap.css'), 'all and (min-width: 481px) and (max-width: 1024px)')
-             ->appendStylesheet($view->baseUrl('_styles/css/mobile.css'), 'all and (max-width: 481px)')
+            ->appendStylesheet($view->baseUrl('_styles/css/_libs/reset/reset.css'), 'all')
+            ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap/bootstrap.css'), 'all')
+            ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap-responsive.css'), 'all')
+            ->appendStylesheet('http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700', 'all')
+            ->appendStylesheet($view->baseUrl('_styles/css/common.css'), 'all')
+            ->appendStylesheet($view->baseUrl('_styles/css/main.css'), 'all')
+             
              
         ;
         $view->headScript()
-                ->appendFile($view->baseUrl('_scripts/_libs/modernizr/modernizr-2.6.2.min.js'));
+            ->appendFile($view->baseUrl('_scripts/_libs/modernizr/modernizr-2.6.2.min.js'));
        
 
         $view->inlineScript()
-             ->appendFile('http://code.jquery.com/jquery-latest.js')
-             ->appendFile($view->baseUrl('_scripts/_libs/bootstrap/bootstrap.min.js'))
-             ->appendFile($view->baseUrl('_scripts/js/geolocation.js'))
-             ->appendFile($view->baseUrl('_scripts/js/statGhent.js'))
-             ->appendFile($view->baseUrl('_scripts/js/loadData.js'))
+            ->appendFile('http://code.jquery.com/jquery-latest.js')
+            ->appendFile($view->baseUrl('_scripts/_libs/bootstrap/bootstrap.min.js'))
+            ->appendFile($view->baseUrl('_scripts/js/geolocation.js'))
+            ->appendFile($view->baseUrl('_scripts/js/statGhent.js'))
+            ->appendFile($view->baseUrl('_scripts/js/loadData.js'))
         ;
     }
     /***
