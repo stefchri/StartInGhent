@@ -13,7 +13,9 @@ Made with PHP Zend Framework 1.12 and codeinchaos/restful-zend-framework for the
 
 How to set up
 --------
+
 Import database in PhpMyAdmin from /docs
+
 Create folders:
 - /public/images
 - /public/config
