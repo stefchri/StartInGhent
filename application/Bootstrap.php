@@ -25,7 +25,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink() 
             ->appendStylesheet($view->baseUrl('_styles/css/_libs/reset/reset.css'), 'all')
             ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap/bootstrap.css'), 'all')
-            ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap-responsive.css'), 'all')
+            ->appendStylesheet($view->baseUrl('_styles/css/_libs/bootstrap/bootstrap-responsive.css'), 'all')
             ->appendStylesheet('http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700', 'all')
             ->appendStylesheet($view->baseUrl('_styles/css/common.css'), 'all')
             ->appendStylesheet($view->baseUrl('_styles/css/main.css'), 'all')
@@ -39,9 +39,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->inlineScript()
             ->appendFile('http://code.jquery.com/jquery-latest.js')
             ->appendFile($view->baseUrl('_scripts/_libs/bootstrap/bootstrap.min.js'))
-            ->appendFile($view->baseUrl('_scripts/js/geolocation.js'))
-            ->appendFile($view->baseUrl('_scripts/js/statGhent.js'))
-            ->appendFile($view->baseUrl('_scripts/js/loadData.js'))
         ;
     }
     /***
