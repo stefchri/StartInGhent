@@ -1,20 +1,35 @@
-<div id="list">
-    
+<div class="span12 centered firstblock clearfix">
     <?php foreach ($this->users as $user): ?>
-    <section class="user">
-        <h3><?php echo $user->getUsername(); ?></h3>
-        <p><?php echo $user->getFirstname(); ?> <?php echo $user->getSurname(); ?></p>
-        <p><?php echo $user->getEmail(); ?></p>
-        <p><?php echo $user->getDescription(); ?></p>
-        <p>Joined <?php echo $user->getCreateddate(); ?></p>
-        <img src="http://<?php 
-            $url = PUBLIC_PATH . "/images/" . $user->getAvatar();
-            $url = join("/",explode("\\",$url));
-            $url = explode("htdocs/", $url)[1];
-            echo ($_SERVER["HTTP_HOST"] . "/" . $url);
-        ?>" />
-        
-    </section>
+    <div class="row">
+        <div class="span12 user">
+            <div class="row">
+                <div class="span3">
+                    <img class="img-polaroid" src="http://<?php 
+                    
+                    //$avatar = $user->getAvatar == null? PUBLIC_PATH . "/images/" . $user->getAvatar();person-placeholder.jpg:PUBLIC_PATH . "/images/" . $user->getAvatar();
+                    
+                    
+                        $url = PUBLIC_PATH . "/images/" . $user->getAvatar();
+                        $url = join("/",explode("\\",$url));
+                        $url = explode("htdocs/", $url)[1];
+                        echo ($_SERVER["HTTP_HOST"] . "/" . $url);
+                    ?>" />
+                </div>
+                <div class="span9">
+                    <h1><?php echo $user->getUsername(); ?></h1>
+                    <?php if ($user->getAnswers() == null): ?>
+                    <p class="lead lead-push">
+                        <?php echo $user->getUsername(); ?> hasn't searched for the best place to start yet.
+                    </p>
+                    <?php else: ?>
+                    <a class="btn btn-bottom-users" href="<?php echo $this->url(
+                                                            array('controller'=>'profile', 'action' => 'answers'),
+                                                            'default',
+                                                            true) . "/" . $user->getId() ?>">Check where <?php echo $user->getUsername(); ?> should start</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php endforeach;?>
-    
 </div>

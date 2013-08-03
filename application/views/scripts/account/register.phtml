@@ -1,7 +1,14 @@
-<?php echo $this->form->renderForm(false) ?>
-<h2 data-role="header" class="ui-header ui-bar-a ui-title" role="banner" role="heading" aria-level="1">Create account</h2>
-<span class="closeBtn btn">X</span>                        
-    <?php foreach ($this->form->getElements() as $element): ?>
-        <?php echo $element ?>
-    <?php endforeach; ?>
-</form>
+<div class="span12 centered firstblock clearfix">
+    <div class="row">
+        <div class="span7">
+            <h1>Register</h1>
+            <?php echo $this->form ?>
+                <?php 
+                    if(isset($this->error)) {
+                        echo "<p>" . $this->error . "</p>";
+                    }
+                ?>
+            </form>
+        </div>
+    </div>
+</div>

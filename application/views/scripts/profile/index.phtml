@@ -1,17 +1,52 @@
-<h1>Welcome <?php echo $this->username ?></h1>
-<h2><?php echo $this->firstname ?> <?php echo $this->surname ?></h2>
-<h2>Email: <a href="mailto:<?php echo $this->email ?>"><?php echo $this->email ?></a></h2>
-<?php if (!empty($this->description)):?>
-    <p><strong>About <?php echo $this->firstname ?>:</strong> <?php echo $this->description ?></p>
-<?php endif; ?> 
-
-<img src="<?php echo $this->baseUrl() ?>/images/<?php echo $this->avatar ;?>" alt="avatar-<?php echo $this->username ?>" />
-<a href="<?php echo $this->url(
-    array('controller'=>'profile', 'action' => 'edit'),
-    'default',
-    true) ?>">Edit Profile</a>
-<a href="<?php echo $this->url(
-    array('controller'=>'account', 'action' => 'logout'),
-    'default',
-    true) ?>">Logout</a>
-        
+<div class="span12 centered clearfix firstblock">
+    <div class="row">
+        <div class="span6">
+            <h1>Welcome <?php echo $this->username ?></h1>
+            <p class="lead">
+                This is your profile page. You can change this whenever you like. <br/>
+                No information will be supplied to third parties, nor shall the information be ever used besides on this website.
+            </p>
+        </div>
+        <div class="span6">
+            <img src="<?php echo $this->baseUrl('images/' . $this->avatar) ?>" class="img-polaroid " alt="avatar-<?php echo $this->username ?>" />
+        </div>
+    </div>
+    <div class="row firstblock">
+        <div class="span6">
+            <h1><?php echo $this->firstname ?> <?php echo $this->surname ?></h1>
+            <strong>Email</strong><br/>
+            <p><?php echo $this->email ?></p>
+            <strong>Gender</strong><br/>
+            <p><?php echo ($this->gender == "m"?"Man":"Woman") ?></p>
+            <strong>Joined</strong><br/>
+            <p><?php echo $this->createddate ?></p>
+            <strong>Last time you logged in</strong><br/>
+            <p><?php echo $this->lastloggedindate ?></p>
+            <a href="<?php echo $this->url(
+                array('controller'=>'profile', 'action' => 'edit'),
+                'default',
+                true) ?>">Edit Profile</a>
+        </div>
+        <div class="span6">
+            <h1>Description</h1>
+            <p>
+                <?php echo $this->description ?>
+            </p>
+        </div>
+    </div>
+    <div class="row firstblock">
+        <div class="span12">
+            <h1>Where can you start best?</h1>
+            <?php if($this->hasAnswers): ?>
+            
+            <?php else: ?>
+            <p class="lead">You haven't searched for the best place to move yet! Care to try it out?</p>
+                <a href="<?php echo $this->url(
+                    array('controller'=>'index', 'action' => 'answers'),
+                    'default',
+                    true) ?>" class="btn btn-success btn-large btn-block btn-answers">Check where to start</a>
+            <?php endif; ?>
+        </div>
+    </div>
+    
+</div>

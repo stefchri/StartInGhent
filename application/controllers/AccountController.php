@@ -22,7 +22,14 @@ class AccountController extends Zend_Controller_Action
         if ($request->isPost() ) {
             if ($form->isValid( $request->getPost() )) {
                 $values = $form->getValues();
-                $user = new Application_Model_User($values);
+                
+                $valuesFiltered = array();
+                foreach ($values as $key => $value) {
+                    if ($key != "break" && $key != "forgot") {
+                        $valuesFiltered[$key] = $value;
+                    }
+                }
+                $user = new Application_Model_User($valuesFiltered);
                 
                 $adapter = new statGhent_Auth_Adapter_User($user->getUsername(),
                                                       $user->getPassword());
@@ -32,11 +39,12 @@ class AccountController extends Zend_Controller_Action
 
                 if ($this->_auth->hasIdentity() ) {
                     $user_data = $adapter->getResultRowObject();
-
+                    
                     $this->_auth->getStorage()->write(array('role' => statGhent_Acl::ROLE_USER,
                                                             'id'   => (int) $user_data->user_id,
                                               ));
                     $userM = new Application_Model_UserMapper();
+                    
                     $u = new Application_Model_User($userM->read($user_data->user_id));
                     $now = new DateTime('now');
                     $logind = $now->format('Y-m-d H:i:s');

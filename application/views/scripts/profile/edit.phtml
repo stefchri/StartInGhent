@@ -1,11 +1,18 @@
-<img src="<?php echo $this->image ?>"  alt="test" />
-<a href="<?php echo $this->url(
-    array('controller'=> 'profile', 'action'=>'index'),
-    'default',
-    true) ?>">Cancel</a>
-<a href="<?php echo $this->url(
-    array('controller'=>'account', 'action' => 'logout'),
-    'default',
-    true) ?>">Logout</a>
-
-<?php echo $this->form; ?>
+<div class="span12 centered firstblock clearfix">
+    <div class="row">
+        <div class="span7 breath-bottom">
+            <h1>Edit your profile</h1>
+            <?php echo $this->form ?>
+                <?php 
+                    if(isset($this->error)) {
+                        echo "<p>" . $this->error . "</p>";
+                    }
+                ?>
+            </form>
+            <a href="<?php echo $this->url(
+                array('controller'=> 'profile', 'action'=>'index'),
+                'default',
+                true) ?>">Cancel</a>
+        </div>
+    </div>
+</div>

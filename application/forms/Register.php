@@ -9,36 +9,29 @@ class Application_Form_Register extends Zend_Form
             'ViewHelper',
             array('Errors', array ('class' => 'help-inline')),
             array(
-                array('inner' => 'HtmlTag'),
-                array('tag'   => 'div',
-                      'class' => 'controls',
-                )
-            ),
-            array(
                 'Label',
                 array('placement' => 'prepend',
-                      'class'     => 'control-label',
                 )
-            ),
-            array(
-                array('outer' => 'HtmlTag'),
-                array('tag'   => 'div',
-                      'class' => 'control-group')),
+            )
         );
         $password = new Zend_Form_Element_Password('passwordraw');
-        $password
+        $password   
+                    ->setLabel("Password")
                     ->setRequired()
                     ->addFilter('StringTrim')
                     ->addValidator('NotEmpty', true)
                     ->setAttrib('id','register-pwd')
                     ->setAttrib('placeholder','Password')
                     ->setAttrib('tabindex', '2')
-                    ->setAttrib('class', 'ui-input-password ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
+                    ->setAttrib('autofocus', 'autofocus')
                     ->setOrder(1);
         ;
         
         $passwordcheck = new Zend_Form_Element_Password('passwordcheck');
-        $passwordcheck
+        $passwordcheck   
+                    ->setLabel("Repeat password")
                     ->setRequired()
                     ->addFilter('StringTrim')
                     ->addValidator('NotEmpty', true)
@@ -46,50 +39,58 @@ class Application_Form_Register extends Zend_Form
                     ->setAttrib('id','register-pwdRpt')
                     ->setAttrib('placeholder','Repeat password')
                     ->setAttrib('tabindex', '3')
-                    ->setAttrib('class', 'ui-input-password ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
                     ->setOrder(2);
                 
                 
         ;
         
         $username = new Zend_Form_Element_Text('username');
-        $username   
+        $username      
+                    ->setLabel("Username")
                     ->setRequired()
                     ->addFilter('StringTrim')
                     ->addValidator('NotEmpty', true)
                     ->setAttrib('id','login-username')
                     ->setAttrib('placeholder','Username')
                     ->setAttrib('tabindex', '1')
-                    ->setAttrib('autofocus', 'autofocus')
-                    ->setAttrib('class', 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
                     ->setOrder(3);
         ;
         $firstname = new Zend_Form_Element_Text('firstname');
         $firstname  
+           
+                    ->setLabel("Firstname")
                     ->setRequired()
                     ->addFilter('StringTrim')
                     ->addValidator('NotEmpty', true)
                     ->setAttrib('id','register-fname')
                     ->setAttrib('placeholder','Firstname')
                     ->setAttrib('tabindex', '4')
-                    ->setAttrib('class', 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
                     ->setOrder(4);
 
         ;
         $surname = new Zend_Form_Element_Text('surname');
         $surname   
+                    ->setLabel("Surname")
                     ->setRequired()
                     ->addFilter('StringTrim')
                     ->addValidator('NotEmpty', true)
                     ->setAttrib('id','register-fname')
                     ->setAttrib('placeholder','Surname')
                     ->setAttrib('tabindex', '5')
-                    ->setAttrib('class', 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
                     ->setOrder(5);
         ;
         
         $email = new Zend_Form_Element_Text('email');
-        $email 
+        $email    
+                    ->setLabel("Email")
                     ->setRequired()
                     ->addFilter('StringTrim')
                     ->addValidator('NotEmpty', true)
@@ -97,7 +98,8 @@ class Application_Form_Register extends Zend_Form
                     ->setAttrib('id','register-email')
                     ->setAttrib('placeholder','Email')
                     ->setAttrib('tabindex', '6')
-                    ->setAttrib('class', 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
                     ->setOrder(6);
         ;
         
@@ -110,14 +112,18 @@ class Application_Form_Register extends Zend_Form
                     ))
                     ->setRequired()
                     ->setAttrib('tabindex', '7')
+                    ->setAttrib('class', 'inline')
+                   // ->setDecorators($decorators)
                     ->setOrder(7);
         ;
         $description = new Zend_Form_Element_Textarea('description');
-        $description  
+        $description     
+                    ->setLabel("Description")
                     ->setAttrib('placeholder', "Describe yourself briefly (optional).")
                     ->setAttrib('id','textarea-a')
                     ->setAttrib('tabindex', '8')
-                    ->setAttrib('class', 'ui-input-text ui-body-c ui-corner-all ui-shadow-inset')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
                     ->setOrder(8);
         ;
         
@@ -129,6 +135,7 @@ class Application_Form_Register extends Zend_Form
                     ->setMaxFileSize(512000)
                     ->addValidator('Count', false, 1)
                     ->setAttrib('tabindex', '10')
+                    ->setAttrib('class', 'form-field input-xxlarge')
                     ->setOrder(10);
         ;
 
@@ -136,6 +143,7 @@ class Application_Form_Register extends Zend_Form
         $submit
                     ->setLabel('Register')
                     ->setOptions(array('class' => 'btn btn-success'))
+                    ->setDecorators(array('ViewHelper',array('Errors', array ('class' => 'help-inline'))))
                     ->setAttrib('id', 'register-btn')
                     ->setAttrib('tabindex', '11')
                     ->setOrder(20);
