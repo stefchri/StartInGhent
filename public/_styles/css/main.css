@@ -56,7 +56,10 @@ footer p{
     line-height: 24px;
 }
 
-
+.center{
+    text-align: center;
+    margin-bottom: 40px;
+}
 
 h1{
     font-family: 'PT Sans Narrow', sans-serif;
@@ -97,4 +100,47 @@ h1{
     border: none;
     border-top: 1px solid #EFCCB2;
     margin: 50px 0;
+}
+
+.form-field{
+    margin-bottom: 10px !important;
+}
+
+/*LOGIN PAGE*/
+#login-img{
+    display:block;
+    width: 100%;
+    
+}
+#login{
+    padding-left: 10px;
+}
+/*REGISTER PAGE*/
+
+#register input:not([type='radio']), #forgot input{
+    display: block;
+}
+
+#register textarea{
+    resize:none;
+    height: 200px;
+}
+
+/* PROFILE PAGE */
+.img-profile{
+    width: 105px;
+}
+.breath-bottom{
+    margin-bottom: 70px;
+}
+.btn-answers{
+    margin-top: 90px;
+    margin-bottom: 100px;
+}
+/* USERS PAGE */
+.btn-bottom-users{
+    margin-top: 20px;
+}
+.user{
+    margin-bottom: 30px;
 }

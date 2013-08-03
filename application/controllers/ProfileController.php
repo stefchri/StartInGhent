@@ -25,17 +25,20 @@ class ProfileController extends Zend_Controller_Action
         $view->assign('email',$user->getEmail());
         $view->assign('gender',$user->getGender());
         $view->assign('description',$user->getDescription());
+        $view->assign('lastloggedindate',$user->getLastloggedindate());
+        $view->assign('createddate',$user->getCreateddate());
         
         $view->assign('avatar',$user->getAvatar());
+        
+        
+        $view->assign('hasAnswers',$user->getAnswers()==null?false:true);
+        $view->assign('answers',$user->getAnswers());
     }
 
     public function editAction()
     {
         $this->view->headTitle("Edit Profile");
         $form = new Application_Form_Register();
-        $form->getElement("submit")->setLabel("Change");
-        $form->getElement("passwordraw")->clearValidators()->setAllowEmpty(true)->setRequired(false)->setOrder(17);
-        $form->getElement("passwordcheck")->clearValidators()->setAllowEmpty(true)->setRequired(false)->setOrder(18);
         $form->removeElement('username');
         $form->removeElement('submit');
         $form->removeElement('passwordraw');
@@ -43,22 +46,42 @@ class ProfileController extends Zend_Controller_Action
         
         $password = new Zend_Form_Element_Password('passwordraw');
         $password
+                    ->setLabel("Change password")
                     ->addFilter('StringTrim')
                     ->setAttrib('id','register-pwd')
-                    ->setAttrib('placeholder','Change password')
-                    ->setAttrib('tabindex', '2')
-                    ->setAttrib('class', 'ui-input-password ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('placeholder','Password')
+                    ->setAttrib('tabindex', '11')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators(array(
+                                        'ViewHelper',
+                                        array('Errors', array ('class' => 'help-inline')),
+                                        array(
+                                            'Label',
+                                            array('placement' => 'prepend',
+                                            )
+                                        )
+                                    ))
                     ->setOrder(17);
         ;
         
         $passwordcheck = new Zend_Form_Element_Password('passwordcheck');
         $passwordcheck
+                    ->setLabel("Repeat new password")
                     ->addFilter('StringTrim')
                     ->addValidator('Identical', false, array('token' => 'passwordraw'))
                     ->setAttrib('id','register-pwdRpt')
-                    ->setAttrib('placeholder','Repeat new password')
-                    ->setAttrib('tabindex', '3')
-                    ->setAttrib('class', 'ui-input-password ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c')
+                    ->setAttrib('placeholder','Repeat password')
+                    ->setAttrib('tabindex', '12')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators(array(
+                                        'ViewHelper',
+                                        array('Errors', array ('class' => 'help-inline')),
+                                        array(
+                                            'Label',
+                                            array('placement' => 'prepend',
+                                            )
+                                        )
+                                    ))
                     ->setOrder(18);
         ;
         
@@ -66,7 +89,8 @@ class ProfileController extends Zend_Controller_Action
         $submit->setLabel('Submit changes')
                 ->setOptions(array('class' => 'btn btn-success'))
                 ->setAttrib('id', 'register-btn')
-                ->setAttrib('tabindex', '11')
+                ->setAttrib('tabindex', '13')
+                ->setDecorators(array('ViewHelper',array('Errors', array ('class' => 'help-inline'))))
                 ->setOrder(20);
         ;
         $form->addElement($password);
@@ -187,7 +211,12 @@ class ProfileController extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance();
         $userM = new Application_Model_UserMapper();
         $users = $userM->fetchAll();
-       
-        $view->assign('users',$users);
+        $us = array();
+        foreach ($users as $value) {
+            if ($value->getActivationdate() != null && $value->getDeleteddate() == null) {
+                array_push($us, $value);
+            }
+        }
+        $view->assign('users',$us);
     }
 }

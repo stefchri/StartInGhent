@@ -9,60 +9,56 @@ class Application_Form_Forgotpassword extends Zend_Form
             'ViewHelper',
             array('Errors', array ('class' => 'help-inline')),
             array(
-                array('inner' => 'HtmlTag'),
-                array('tag'   => 'div',
-                      'class' => 'controls',
-                )
-            ),
-            array('Label',
+                'Label',
                 array('placement' => 'prepend',
-                      'class'     => 'control-label',
                 )
-            ),
-            array(
-                array('outer' => 'HtmlTag'),
-                array('tag'   => 'div',
-                      'class' => 'control-group')),
+            )
         );
         
-    $username = new Zend_Form_Element_Text('username');
+        $username = new Zend_Form_Element_Text('username');
 
-        $username
+        $username->setLabel('Username')
                       ->setRequired()
                       ->addFilter('StringTrim')
                       ->addValidator('NotEmpty', true) 
                       ->setAttrib('placeholder','Username')
                       ->setAttrib('tabindex', '1')
                       ->setAttrib('autofocus', 'autofocus')
-                      ->setOptions(array('class' => 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c', 'id' => 'forgot-username'))
+                      ->setDecorators($decorators)
+                      ->setOptions(array('class' => 'form-field', 'id' => 'forgot-username'))
         ;
 
         $email = new Zend_Form_Element_Text('email');
-        $email
+        $email->setLabel('Email')
                      ->setRequired()
                      ->addValidator('NotEmpty', true)
                      ->addValidator('EmailAddress')
                      ->addFilter('StringTrim')
                       ->setAttrib('placeholder','Email')
                       ->setAttrib('tabindex', '2')
-                      ->setOptions(array('class' => 'ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c', 'id' => 'forgot-email'))
+                      ->setDecorators($decorators)
+                      ->setOptions(array('class' => 'form-field', 'id' => 'forgot-email'))
         ;
 
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('Request password')
+        $submit->setLabel('Request new password')
                ->setOptions(array('class' => 'btn btn-success', 'id' => "fpwd-btn"))
                       ->setAttrib('tabindex', '3')
+                ->setDecorators(array(
+                                        'ViewHelper',
+                                        
+                                    ))
                ;
 
         $view = Zend_Layout::getMvcInstance()->getView();
 
-        $this->setOptions(array('class' => 'form-horizontal', 'id' => 'view-forgot'))
+        $this->setOptions(array('id' => 'forgot'))
              ->setDecorators(array('FormElements', 'Form'))
              ->setMethod('post')
              ->setAction('')
              ->addElement($username)
              ->addElement($email )
-             ->addElement($submit       )
+             ->addElement($submit)
         ;
     }
 

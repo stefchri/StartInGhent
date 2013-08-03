@@ -3,6 +3,9 @@
 defined('PUBLIC_PATH')
 || define('PUBLIC_PATH', realpath(dirname(__FILE__)));
 
+defined('WEB_BASE_PATH')
+|| define('WEB_BASE_PATH', 'http://' . $_SERVER['HTTP_HOST'] . '/StartInGhent/public/');
+
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
