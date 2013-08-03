@@ -19,7 +19,6 @@ html, body{
     min-height: 100%;
 }
 #main {
-    overflow:auto;
     padding-bottom: 232px;
 }
 /*Opera Fix*/

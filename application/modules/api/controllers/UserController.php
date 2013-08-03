@@ -12,7 +12,7 @@ class Api_UserController extends REST_Controller
         $l = new statGhent_DataAdapter();
         $db = $l->getConnection();
         
-        $sql = 'SELECT user_id, username, email, firstname, surname, gender, description, website, avatar, answers, createddate, lastloggedindate, activationdate FROM users';
+        $sql = 'SELECT user_id, username, email, firstname, surname, gender, description, avatar, answers, createddate, lastloggedindate, activationdate FROM users';
         $stmnt = $db->prepare($sql);
         $stmnt->_execute();
         
@@ -56,7 +56,7 @@ class Api_UserController extends REST_Controller
         $db = $l->getConnection();
         
         $sql = 'SELECT user_id, username, email, firstname, surname, gender, 
-                description, website, avatar, answers, createddate, lastloggedindate, 
+                description, avatar, answers, createddate, lastloggedindate, 
                 activationdate FROM users WHERE user_id =:id'
         ;
         
