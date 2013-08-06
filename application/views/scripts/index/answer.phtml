@@ -1,6 +1,9 @@
 <?php 
     $this->inlineScript()
-         ->appendFile($this->baseUrl('_scripts/js/answers.js')); 
+         ->appendFile($this->baseUrl('_scripts/js/answers.js')) 
+         ->appendFile($this->baseUrl('_scripts/_libs/heatmaps/heatmap.js')) 
+         ->appendFile($this->baseUrl('_scripts/_libs/heatmaps/heatmap-gmaps.js'))
+    ;
 ?>
 
 <div class="span12 centered firstblock clearfix" id='answers-title'>
@@ -18,9 +21,8 @@
     <div class="row">
         <div class="span12 question" data-question='1'>
             <h1 class='text-center'>1. How old are you?</h1>
-            <label class='radio' for='age0'><input type='radio' name='age' value='0' id='age0' />&lt; 18 years old</label> 
-            <label class='radio' for='age1'><input type='radio' name='age' value='1' id='age1' />18 to 24 years old</label> 
-            <label class='radio' for='age2'><input type='radio' name='age' value='2' id='age2' />&gt; 24 years old</label> 
+            <label class='radio' for='age1'><input type='radio' name='age' value='0' id='age1' />18 to 24 years old</label> 
+            <label class='radio' for='age2'><input type='radio' name='age' value='1' id='age2' />&gt; 24 years old</label> 
         </div>
         <div class="span12 question" data-question='2'>
             <h1 class='text-center'>2. Are you in need of a green environment?</h1>
@@ -84,13 +86,13 @@
             <h1 class='text-center'>11. What diploma did you get?</h1>
             <label class='radio' for='dib0'><input type='radio' name='dib' value='0' id='dib0'  />I graduated from college and got a masters degree.</label> 
             <label class='radio' for='dib1'><input type='radio' name='dib' value='1' id='dib1' />I graduated from college and got a bachelors degree.</label>
-            <label class='radio' for='dib1'><input type='radio' name='dib' value='1' id='dib2' />I didn't go to college.</label>
+            <label class='radio' for='dib2'><input type='radio' name='dib' value='2' id='dib2' />I didn't go to college.</label>
         </div>
         <div class="span12 question" data-question='12'>
             <h1 class='text-center'>12. Do you regularly go out?</h1>
             <label class='radio' for='out0'><input type='radio' name='out' value='0' id='out0'  />Yes, twice a week.</label> 
             <label class='radio' for='out1'><input type='radio' name='out' value='1' id='out1' />Yes, once every two weeks.</label>
-            <label class='radio' for='out2'><input type='radio' name='out' value='1' id='out2' />No</label>
+            <label class='radio' for='out2'><input type='radio' name='out' value='2' id='out2' />No</label>
         </div>
         <div class="span12">
             <ul class="pager">
@@ -105,3 +107,11 @@
         
     </div>
 </div>
+<div class="span12 centered firstblock clearfix hide" id='map_span'>
+    <div id="gmap"></div>
+</div>
+<script>
+var _baseUrl = "<?php echo WEB_BASE_PATH; ?>";
+</script>
+<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqsjbo0JTyqexEzIBOYcolZlo5SBUGrHc&sensor=false"></script>
