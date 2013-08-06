@@ -8,7 +8,14 @@
             </p>
         </div>
         <div class="span6">
-            <img src="<?php echo $this->baseUrl('images/' . $this->avatar) ?>" class="img-polaroid " alt="avatar-<?php echo $this->username ?>" />
+            <img src="<?php 
+            if ($this->avatar == null) {
+                echo WEB_BASE_PATH . "_assets/img/person-placeholder.jpg";
+            }
+            else {
+                echo WEB_BASE_PATH . "images/" . $this->avatar;
+            } 
+            ?>" class="img-polaroid " alt="avatar-<?php echo $this->username ?>" />
         </div>
     </div>
     <div class="row firstblock">

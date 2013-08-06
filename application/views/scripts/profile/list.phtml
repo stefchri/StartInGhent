@@ -3,18 +3,18 @@
     <div class="row">
         <div class="span12 user">
             <div class="row">
-                <div class="span3">
+                <div class="span2">
                     <img class="img-polaroid" src="<?php 
-                    if ($user->getAvatar == null) {
-                        echo WEB_BASE_PATH . "/_assets/img/person-placeholder.jpg";
+                    if ($user->getAvatar() == null) {
+                        echo WEB_BASE_PATH . "_assets/img/person-placeholder.jpg";
                     }
                     else {
-                        
+                        echo WEB_BASE_PATH . "images/" . $user->getAvatar();
                     }
-                    echo WEB_BASE_PATH . "/images/" . $user->getAvatar();
+                    
                     ?>" />
                 </div>
-                <div class="span9">
+                <div class="span10">
                     <h1><?php echo $user->getUsername(); ?></h1>
                     <?php if ($user->getAnswers() == null): ?>
                     <p class="lead lead-push">

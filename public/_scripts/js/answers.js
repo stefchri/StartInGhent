@@ -27,18 +27,29 @@ function showAnswer(id, dir)
 
 function next()
 {
-    if (_active !== _max) 
+    if(checkIfFilledIn())
     {
-        showAnswer(++_active, true);
-        if (_active === _max)
-           $(".next").addClass("disabled"); 
-       else
-           $(".previous").removeClass("disabled"); 
+        if (_active !== _max) 
+        {
+            showAnswer(++_active, true);
+            if (_active === _max)
+               $(".next a").html("Finish"); 
+           else
+            {
+                $(".next a").html("Next &rarr;");
+                $(".previous").removeClass("disabled"); 
+            }
+        }
+        else
+        {
+            finish();
+        }
     }
     else
     {
-        $(".next").addClass("disabled");
+        alertMsg();
     }
+    
 }
 
 function previous()
@@ -49,12 +60,45 @@ function previous()
         if (_active === 1)
             $(".previous").addClass("disabled"); 
         else
+        {
             $(".next").removeClass("disabled"); 
+            $(".next a").html("Next &rarr;");
+        }
     }
     else
     {
         $(".previous").addClass("disabled");
     }
+}
+
+function checkIfFilledIn()
+{
+    var flag = false;
+    $(".question[data-question='" + _active + "'] input[type='radio']").each(function(i,v){
+        console.log("checking");
+        if ($(v).is(':checked')) {
+            flag = true;
+        }
+    });
+    return flag;
+}
+
+function alertMsg()
+{
+    var msg =   '<div class="alert fade in span12">'+
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+                    '<strong>Hey there!</strong> You can only switch questions if you filled this one in.'+
+                '</div>';
+    $("#test").append(msg);
+    $(".alert").alert();
+    setTimeout(function () {
+        $(".alert").alert('close')
+    }, 3000);
+}
+
+function finish()
+{
+    $("#test").hide();
 }
 
 

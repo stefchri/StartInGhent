@@ -144,3 +144,8 @@ h1{
 .user{
     margin-bottom: 30px;
 }
+
+/* ANSWERS PAGE */
+.question{
+    height: 300px;
+}
