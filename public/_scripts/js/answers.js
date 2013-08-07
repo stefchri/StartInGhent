@@ -5,13 +5,14 @@
  * 
  */
 var _active = 1;
-var _max = 12;
+var _max = 11;
 var alertM = false;
 var _answers = {};
 var _data = {};
 var _hmdata = [];
 var _wijken = {};
 var _map;
+var _heatmap;
 
 //NAVIGATION
 function start(){
@@ -151,28 +152,73 @@ function analyseAnswers()
                     break;
            
             //KIDS
-            case "3":   console.log(3);
-                        break;
+            case "3":   
+                    if (va != 5 && va != 2) {
+                        parsePoints(_data["Basisscholen"].value.Basisscholen, false);
+                        parsePoints(_data["SecundaireScholen"].value.SecundaireScholen, false);
+                        var set = _data["Speelterreinen"].value.Speelterreinen;
+                        $.each(set, function(i,v){
+                            getCenterPoint(v.coords, 1);
+                        });
+                    }
+                    break;
                         
-            //COMFORT
-            case "4":   console.log(4);
-                        break;
-            case "5":   console.log(5);
-                        break;
-            case "6":   console.log(6);
-                        break;
-            case "7":   console.log(7);
-                        break;
-            case "8":   console.log(8);
-                        break;
-            case "9":   console.log(9);
-                        break;
-            case "10":   console.log(10);
-                        break;
-            case "11":   console.log(11);
-                        break;
-            case "12":   console.log(12);
-                        break;
+            //BUURTCENTRA
+            case "4": 
+                    if (va != 2) {
+                        parsePoints(_data["Buurtcentra"].value.Buurtcentra, false);
+                    }
+                    break;
+                        
+            //TRAIN
+            case "5":   
+                    if (va == 0) {
+                        parsePoints(_data["stationsgent"].value.stationsgent, false);
+                    }
+                    break;
+                        
+            //BIB            
+            case "6":   
+                    if (va == 1) {
+                        parsePoints(_data["Bibliotheek"].value.Bibliotheek, false);
+                    }
+                    break;
+                        
+            //SPORT
+            case "7":   
+                    if (va == 1 || va ==0) {
+                        parsePoints(_data["Sportcentra"].value.Sportcentra, false);
+                    }
+                    break;
+            
+             
+            //GARAGE
+            case "8":   
+                    if (va == 1) {
+                        parsePoints(_data["parkings"].value.parkings, false);
+                    }
+                    break;
+                    
+            //OCMW
+            case "9":   
+                    if (va == 0) {
+                        parsePoints(_data["Welzijnsbureaus"].value.Welzijnsbureaus, true);
+                    }
+                    break;
+                    
+            //DOGS        
+            case "10":   
+                    if (va == 0) {
+                        parsePointsDogs(_data["Hondenvoorzieningen"].value.Hondenvoorzieningen);
+                    }
+                    break;
+                        
+            //CINE            
+            case "11":   
+                    if (va == 1) {
+                        parsePoints(_data["Bioscopen"].value.Bioscopen, false);
+                    }
+                    break;
             
                 
         }
@@ -202,6 +248,7 @@ function getCenterPoint(coords, impact)
 {
     //SPLIT COORDINATES FOR SEARCHING
     var coordsArray = coords.split(' ');
+    coordsArray.pop();
     var coLL = [];
     $.each(coordsArray, function(i,v)
     {
@@ -210,7 +257,6 @@ function getCenterPoint(coords, impact)
         co["lng"] = v.split(",")[0];
         coLL.push(co);
     });
-    
     //SEARCH FOR MIN AND MAX VALUES
     var xMin = coLL[0].lat;
     var xMax = coLL[0].lat;
@@ -228,36 +274,78 @@ function getCenterPoint(coords, impact)
             yMin = v.lng;
         }
         if (yMax < v.lng) {
-            yMin = v.lng;
+            yMax = v.lng;
         }
+        
+        
     });
     hmpoint = {};
-    hmpoint["lat"] = xMin + ((xMax - xMin) / 2);
-    hmpoint["lng"] = yMin + ((yMax - yMin) / 2);
-    hmpoint["count"] = parseInt(impact);
+    var lat = parseFloat(xMin) + ((xMax - xMin) / 2);
+    var lng = parseFloat(yMin) + ((yMax - yMin) / 2);
+    
+    
+    hmpoint["lat"] = lat;
+    hmpoint["lng"] = lng;
+    hmpoint["count"] = parseInt(1);
     _hmdata.push(hmpoint);
+}
+
+function parsePoints(points, dataFromGhent)
+{
+   $.each(points, function(i,v){
+        hmpoint = {};
+        if (dataFromGhent) {
+            hmpoint["lat"] = (v.latitude).split(',').join(".");
+            hmpoint["lng"] = (v.longitude).split(',').join(".");
+        }
+        else
+        {
+            hmpoint["lat"] = v.lat;
+            hmpoint["lng"] = v.long;
+        }
+        hmpoint["count"] = parseInt(1);
+        _hmdata.push(hmpoint);
+   }); 
+}
+
+function parsePointsDogs(points)
+{
+   $.each(points, function(i,v){
+        hmpoint = {};
+        if (v.soort == "Hondentoilet")
+        {
+            hmpoint["lat"] = (v.lat).split(',').join(".");
+            hmpoint["lng"] = (v.long).split(',').join(".");
+        }
+        hmpoint["count"] = parseInt(1);
+        _hmdata.push(hmpoint);
+   }); 
 }
 
 function placeMap()
 {
-    var heatmap = new HeatmapOverlay(_map, {
-        "radius":20,
-        "visible":true, 
-        "opacity":60
+    _heatmap = new HeatmapOverlay(_map, {
+        "radius":80,
+        "visible":true,
+        "opacity": 100
     });
+    
     var testData={
-            max: 99999,
-            data: _hmdata
+        max: 10,
+        data: _hmdata
     };
-    console.log(testData);
-    heatmap.setDataSet(testData);
+ 
+    // now we can set the data
+    google.maps.event.addListenerOnce(_map, "idle", function(){
+        // this is important, because if you set the data set too early, the latlng/pixel projection doesn't work
+        _heatmap.setDataSet(testData);
+    });
+    
 }
 
 
 $(document).ready(function()
 {
-    
-    
     $(".question").each(function(ind,val){
         if ($(val).data('question') === 1) 
             $(val).show();
@@ -274,6 +362,10 @@ function initializeMap()
     var mapOptions = {
           center: new google.maps.LatLng(51.0625664653974, 3.76548313370094),
           zoom: 11,
+          panControl: false,
+          zoomControl: true,
+          draggable: false,
+          minZoom: 11,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     _map = new google.maps.Map(document.getElementById("gmap"),mapOptions);
