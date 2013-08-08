@@ -4,131 +4,16 @@
  * Author Stefaan Christiaens <stefaan.ch@gmail.com>
  * 
  */
-var _active = 1;
-var _max = 11;
-var alertM = false;
 var _answers = {};
 var _data = {};
 var _hmdata = [];
 var _map;
 var _heatmap;
 
-//NAVIGATION
-function start(){
-    $("#answers-title .row .span12").animate({"margin-left":"-=2000px"}, 1000, function(){
-        $(this).parent().parent().hide(function(){
-            $("#test").show();
-        });
-    });
-    
-    $(document).keydown(function(e){
-        if (e.which == 37) { 
-           previous();
-           return false;
-        }
-        if (e.which == 39) { 
-           next();
-           return false;
-        }
-});
-}
-
-function showAnswer(id, dir)
+function checkAnswersFilledIn()
 {
-    if (dir) 
-        $(".question[data-question='"+ (id-1).toString() +"']").hide();
-    else
-        $(".question[data-question='"+ (id+1).toString() +"']").hide();
-    $(".question[data-question='"+ id +"']").show();
-}
-
-function next()
-{
-    if(checkIfFilledIn())
-    {
-        if (_active !== _max) 
-        {
-            showAnswer(++_active, true);
-            if (_active === _max)
-               $(".next a").html("Finish"); 
-            else
-            {
-                $(".next a").html("Next &rarr;");
-                $(".previous").removeClass("disabled"); 
-            }
-        }
-        else
-        {
-            finish();
-        }
-    }
-    else
-    {
-        alertMsg();
-    }
-    
-}
-
-function previous()
-{
-    if (_active !== 1) 
-    {
-        showAnswer(--_active, false);
-        if (_active === 1)
-            $(".previous").addClass("disabled"); 
-        else
-        {
-            $(".next").removeClass("disabled"); 
-            $(".next a").html("Next &rarr;");
-        }
-    }
-    else
-    {
-        $(".previous").addClass("disabled");
-    }
-}
-
-function checkIfFilledIn()
-{
-    var flag = false;
-    $(".question[data-question='" + _active + "'] input[type='radio']").each(function(i,v){
-        if ($(v).is(':checked')) {
-            flag = true;
-        }
-    });
-    return flag;
-}
-
-function alertMsg()
-{
-    if (!alertM) {
-        var msg =   '<div class="alert fade in span12">'+
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                    '<strong>Hey there!</strong> You can only switch questions if you answered this one.'+
-                '</div>';
-        $("#test").append(msg);
-        $(".alert").alert();
-        setTimeout(function () {
-            $(".alert").alert('close');
-            alertM = false;
-        }, 3000);
-        alertM = true;
-    }
-    
-}
-
-function finish()
-{
-    $(".question").each(function(index,value){
-        var number = $(value).data("question");
-        _answers[number] = $(value).find("input[type='radio']:checked").first().val();
-    });
-    $("#test").hide();
-    
-    $("#map_span").show();
-    initializeMap();
+    _answers = my_answers;
     analyseAnswers();
-    saveAnswers();
 }
 
 function analyseAnswers()
@@ -235,6 +120,7 @@ function loadDataSets()
                 _data[key] = v;
             }
         });
+        checkAnswersFilledIn();
     });
     
 }
@@ -329,7 +215,8 @@ function placeMap()
         max: 10,
         data: _hmdata
     };
- 
+    //Zoom in so the idle listener fires
+    _map.setZoom(12);
     // now we can set the data
     google.maps.event.addListenerOnce(_map, "idle", function(){
         // this is important, because if you set the data set too early, the latlng/pixel projection doesn't work
@@ -338,29 +225,14 @@ function placeMap()
     
 }
 
-function saveAnswers()
-{
-    if (_loggedin) {
-        var postdata = {"id":id, "answers": _answers};
-        $.ajax({
-           type: "POST",
-           data: {"data" : JSON.stringify(postdata)},
-           url: _baseUrl + "api/user"
-        });
-    }
-}
 
 $(document).ready(function()
-{
-    $(".question").each(function(ind,val){
-        if ($(val).data('question') === 1) 
-            $(val).show();
-        else
-            $(val).hide();
-    });
-    $(".previous").addClass("disabled");
+{    
+    if (hasAnswers) {
+        loadDataSets();
+        initializeMap();
+    }
     
-    loadDataSets();
 });
 
 function initializeMap()

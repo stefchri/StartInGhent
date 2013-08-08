@@ -79,4 +79,27 @@ class Api_UserController extends REST_Controller
         
         $this->_response->ok();
     }
+    
+    /**
+     * Store answers
+     */
+    public function postAction()
+    {
+        $data = $this->_getParam('data', 0);
+        $dataDec = json_decode($data); 
+        $id = $dataDec->id;
+        $answers = json_encode($dataDec->answers);
+        
+        $l = new statGhent_DataAdapter();
+        $db = $l->getConnection();
+        
+        $sql = 'UPDATE users SET answers=:answers WHERE user_id =:id'
+        ;
+        
+        $stmnt = $db->prepare($sql);
+        $vals = array(":id" => $id, ":answers" => $answers);  
+        $stmnt->_execute($vals);
+        $this->view->params = $this->_request->getParams();
+        $this->_response->ok();
+    }
 }

@@ -1,0 +1,32 @@
+<?php 
+    $this->inlineScript()
+         ->appendFile($this->baseUrl('_scripts/js/my_answers.js')) 
+         ->appendFile($this->baseUrl('_scripts/_libs/heatmaps/heatmap.js')) 
+         ->appendFile($this->baseUrl('_scripts/_libs/heatmaps/heatmap-gmaps.js')) 
+    ;
+?>
+<?php if(isset($this->error)): ?>
+<div class="span12 centered firstblock clearfix bottom-block" id='answers-title'>
+    <div class="row">
+        <div class="span12">
+            <h1>Error</h1>
+            <p class="lead">
+                <?php echo $this->error ?>
+            </p>
+        </div>
+    </div>
+</div>
+<?php else: ?>
+<div class="span12 centered firstblock clearfix bottom-block" id='map_span'>
+    <h1>These are the places we found suitable for <?php echo $this->username ?></h1>
+    <div id="gmap"></div>
+</div>
+<script>
+var _baseUrl = "<?php echo WEB_BASE_PATH; ?>";
+var hasAnswers = true;
+var my_answers = <?php echo $this->answers ?>;
+
+</script>
+<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqsjbo0JTyqexEzIBOYcolZlo5SBUGrHc&sensor=false"></script>
+<?php endif; ?>

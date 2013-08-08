@@ -219,4 +219,25 @@ class ProfileController extends Zend_Controller_Action
         }
         $view->assign('users',$us);
     }
+
+    public function answersAction()
+    {
+        $view = $this->view;
+        $view->headTitle("Answers");
+        
+        $id = $this->_getParam('id', 0);
+        try{
+            $userM = new Application_Model_UserMapper();
+            $user = new Application_Model_User($userM->read($id));
+        }
+        catch (Exception $ex)
+        {
+            $view->assign("error", "Could not retrieve user.");
+        }
+        
+        
+        $view->assign('username',$user->getUsername());
+        
+        $view->assign('answers',$user->getAnswers());
+    }
 }

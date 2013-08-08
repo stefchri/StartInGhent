@@ -19,15 +19,15 @@ class IndexController extends Zend_Controller_Action
     public function answerAction()
     {
         $this->view->headTitle("Answer");
+        $id=0;
+        try{
+            $id = $this->_auth->getStorage()->read()['id'];
+        }
+        catch(Exception $ex)
+        {
+            //NOT LOGGED IN
+        }
+        $this->view->id = $id;
+        
     }
-
-    public function aboutAction()
-    {
-        // action body
-    }
-
-
 }
-
-
-

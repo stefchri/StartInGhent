@@ -26,6 +26,7 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="edit"/>
           <actionMethod actionName="list"/>
+          <actionMethod actionName="answers"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -143,6 +144,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="about"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Profile">
+            <viewScriptFile forActionName="answers"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

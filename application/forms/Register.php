@@ -14,6 +14,22 @@ class Application_Form_Register extends Zend_Form
                 )
             )
         );
+        
+        
+        $username = new Zend_Form_Element_Text('username');
+        $username      
+                    ->setLabel("Username")
+                    ->setRequired()
+                    ->addFilter('StringTrim')
+                    ->addValidator('NotEmpty', true)
+                    ->setAttrib('id','login-username')
+                    ->setAttrib('placeholder','Username')
+                    ->setAttrib('tabindex', '1')
+                    ->setAttrib('class', 'form-field input-xxlarge')
+                    ->setDecorators($decorators)
+                    ->setAttrib('autofocus', 'autofocus')
+                    ->setOrder(1);
+        ;
         $password = new Zend_Form_Element_Password('passwordraw');
         $password   
                     ->setLabel("Password")
@@ -25,8 +41,7 @@ class Application_Form_Register extends Zend_Form
                     ->setAttrib('tabindex', '2')
                     ->setAttrib('class', 'form-field input-xxlarge')
                     ->setDecorators($decorators)
-                    ->setAttrib('autofocus', 'autofocus')
-                    ->setOrder(1);
+                    ->setOrder(2);
         ;
         
         $passwordcheck = new Zend_Form_Element_Password('passwordcheck');
@@ -41,24 +56,11 @@ class Application_Form_Register extends Zend_Form
                     ->setAttrib('tabindex', '3')
                     ->setAttrib('class', 'form-field input-xxlarge')
                     ->setDecorators($decorators)
-                    ->setOrder(2);
+                    ->setOrder(3);
                 
                 
         ;
         
-        $username = new Zend_Form_Element_Text('username');
-        $username      
-                    ->setLabel("Username")
-                    ->setRequired()
-                    ->addFilter('StringTrim')
-                    ->addValidator('NotEmpty', true)
-                    ->setAttrib('id','login-username')
-                    ->setAttrib('placeholder','Username')
-                    ->setAttrib('tabindex', '1')
-                    ->setAttrib('class', 'form-field input-xxlarge')
-                    ->setDecorators($decorators)
-                    ->setOrder(3);
-        ;
         $firstname = new Zend_Form_Element_Text('firstname');
         $firstname  
            

@@ -15,7 +15,7 @@
         $loggedin = false;;
     }
 ?>
-<header>
+<header class="clearfix">
     <div class="span12 centered">
         <div class="row">
             <div class="span6">
@@ -23,12 +23,27 @@
             </div>
 
             <div class="span6 navigation clearfix">
-                <ul class="nav nav-pills pull-right">
+                <ul class="nav nav-pills pull-right main-nav">
                     <?php if($loggedin): ?>
 
                         <li><a title="Profile" href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'index'),'default',true) ?>"><?php echo ucfirst($username) ?></a></li>
                         <li><a title="Logout" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'logout'), 'default', true) ?>">Logout</a></li>
                         <li><a title="People" href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'list'), 'default', true) ?>">People</a></li>
+                        
+                    <?php else: ?>
+
+                        <li><a title="Login" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'login'),'default',true) ?>">Login</a></li>
+                        <li><a title="Register" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'register'), 'default', true) ?>">Register</a></li>
+
+                    <?php endif; ?>
+                </ul>
+                <ul class="nav nav-pills nav-stacked mobile-nav hide clearfix">
+                    <?php if($loggedin): ?>
+
+                        <li><a title="Profile" href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'index'),'default',true) ?>"><?php echo ucfirst($username) ?></a></li>
+                        
+                        <li><a title="People" href="<?php echo $this->url(array('controller'=>'profile', 'action' => 'list'), 'default', true) ?>">People</a></li>
+                        <li><a title="Logout" href="<?php echo $this->url(array('controller'=>'account', 'action' => 'logout'), 'default', true) ?>">Logout</a></li>
                         
                     <?php else: ?>
 

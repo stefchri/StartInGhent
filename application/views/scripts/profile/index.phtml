@@ -1,4 +1,11 @@
-<div class="span12 centered clearfix firstblock">
+<?php 
+    $this->inlineScript()
+         ->appendFile($this->baseUrl('_scripts/js/my_answers.js')) 
+         ->appendFile($this->baseUrl('_scripts/_libs/heatmaps/heatmap.js')) 
+         ->appendFile($this->baseUrl('_scripts/_libs/heatmaps/heatmap-gmaps.js')) 
+    ;
+?>
+<div class="span12 centered clearfix firstblock bottom-block">
     <div class="row">
         <div class="span6">
             <h1>Welcome <?php echo $this->username ?></h1>
@@ -7,7 +14,7 @@
                 No information will be supplied to third parties, nor shall the information be ever used besides on this website.
             </p>
         </div>
-        <div class="span6">
+        <div class="span6 profile-image">
             <img src="<?php 
             if ($this->avatar == null) {
                 echo WEB_BASE_PATH . "_assets/img/person-placeholder.jpg";
@@ -32,7 +39,7 @@
             <a href="<?php echo $this->url(
                 array('controller'=>'profile', 'action' => 'edit'),
                 'default',
-                true) ?>">Edit Profile</a>
+                true) ?>" id="profile-edit-btn">Edit Profile</a>
         </div>
         <div class="span6">
             <h1>Description</h1>
@@ -41,19 +48,32 @@
             </p>
         </div>
     </div>
-    <div class="row firstblock">
+    <div class="row firstblock profile-map">
         <div class="span12">
             <h1>Where can you start best?</h1>
+            <p>This might take a while to process.</p>
             <?php if($this->hasAnswers): ?>
-            
+                <div id="gmap"></div>
+                <script>
+                    var hasAnswers = true;
+                    var my_answers = <?php echo $this->answers ?>;
+                </script>
             <?php else: ?>
             <p class="lead">You haven't searched for the best place to move yet! Care to try it out?</p>
                 <a href="<?php echo $this->url(
-                    array('controller'=>'index', 'action' => 'answers'),
+                    array('controller'=>'index', 'action' => 'answer'),
                     'default',
                     true) ?>" class="btn btn-success btn-large btn-block btn-answers">Check where to start</a>
+            <script>
+                var hasAnswers = false;
+            </script>
             <?php endif; ?>
         </div>
     </div>
     
 </div>
+<script>
+var _baseUrl = "<?php echo WEB_BASE_PATH; ?>";
+</script>
+<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqsjbo0JTyqexEzIBOYcolZlo5SBUGrHc&sensor=false"></script>
