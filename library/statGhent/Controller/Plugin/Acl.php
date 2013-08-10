@@ -43,6 +43,6 @@ class statGhent_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         if ($this->_acl->isAllowed($role, $resource, $privilege)) {
             return true;
         }
-        throw new Zend_Exception("Access violation for Role '{$role}': no access to resource '{$resource}' for privilege '{$privilege}'");
+        throw new Zend_Exception("ACL", 401);
     }
 }

@@ -20,13 +20,23 @@ class ErrorController extends Zend_Controller_Action
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $priority = Zend_Log::NOTICE;
-                $this->view->message = 'Page not found';
+                $this->view->message = "The page you requested does not exist.";
+                $this->renderScript('error/error_404.phtml');
                 break;
             default:
                 // application error
-                $this->getResponse()->setHttpResponseCode(500);
+                if ($this->getResponse()->getHttpResponseCode() != 401) {
+                    $this->getResponse()->setHttpResponseCode(500);
+                }
+                if ($errors->exception->getMessage() == "ACL") {
+                    $this->getResponse()->setHttpResponseCode(401);
+                    $this->renderScript('error/error_401.phtml');
+                    break;
+                }
                 $priority = Zend_Log::CRIT;
-                $this->view->message = 'Application error';
+                $this->view->exception = $errors->exception;
+                $this->view->request = $errors->request;
+                $this->renderScript('error/error_500.phtml');
                 break;
         }
         
