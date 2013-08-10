@@ -134,8 +134,8 @@ h1{
 }
 
 /* PROFILE PAGE */
-.img-profile{
-    width: 105px;
+.profile-image{
+    width: 200px;
 }
 .breath-bottom{
     margin-bottom: 70px;
@@ -164,6 +164,25 @@ h1{
 }
 #map_span img { max-width: none; }
 .profile-map img { max-width: none; }
+
+.answer canvas{
+    width:50px;
+    height: 50px;
+    display: inline-block;
+    float: left;
+    margin-bottom: 15px;
+}
+.percentage{
+    float: left;
+    padding-top: 15px;
+    margin-left: 12px;
+}
+#images img{
+    width: 50px;
+    float:left;
+    margin-right: 10px;
+    margin-bottom:10px;
+}
 
 /* MEDIA QUERIES */
 /* Large desktop */
@@ -252,6 +271,9 @@ h1{
     }
     #login-btn{
         width: 100%;
+    }
+    #btn-statistics{
+        display: none;
     }
 }
  

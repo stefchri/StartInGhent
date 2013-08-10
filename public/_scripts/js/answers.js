@@ -228,15 +228,48 @@ function analyseAnswers()
 
 function loadDataSets()
 {
-    $.getJSON(_baseUrl + "api/dataset", {}, function(data, status, jqXHR){
-        $.each(data.datasets, function(i,v){
-            for (key in v.value)
-            {
-                _data[key] = v;
-            }
-        });
-    });
+    //CHECK FOR LOCALSTORAGE
+    var flag = false;
+    if (Modernizr.localstorage)
+    {
+        flag = getData();
+    }
     
+    if(!flag)
+    {
+        $.getJSON(_baseUrl + "api/dataset", {}, function(data, status, jqXHR){
+            $.each(data.datasets, function(i,v){
+                for (key in v.value)
+                {
+                    _data[key] = v;
+                }
+            });
+            saveData(data);
+        });
+    }
+    
+}
+
+function getData()
+{
+    if (localStorage.getItem("startinghent.datasets") !== null) {
+        console.log("data found!");
+        var jsonData = $.parseJSON(localStorage["startinghent.datasets"]);
+        $.each(jsonData.datasets, function(i,v){
+            for (key in v.value){_data[key] = v;}
+        });return true;
+    }
+    else
+        return false;
+}
+
+function saveData(data)
+{
+    if (Modernizr.localstorage)
+    {
+        console.log("data stored");
+        localStorage["startinghent.datasets"] = JSON.stringify(data);
+    }
 }
 
 function getCenterPoint(coords, impact)

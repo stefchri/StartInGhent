@@ -240,4 +240,10 @@ class ProfileController extends Zend_Controller_Action
         
         $view->assign('answers',$user->getAnswers());
     }
+
+    public function statisticsAction()
+    {
+        $view = $this->view;
+        $view->headTitle("Statistics");        
+    }
 }

@@ -1,4 +1,6 @@
 <div class="span12 centered firstblock clearfix  bottom-block">
+    <h1>People using StartInGhent to find their ideal location in Ghent</h1>
+    <br/>
     <?php foreach ($this->users as $user): ?>
     <div class="row">
         <div class="span12 user">
@@ -31,4 +33,12 @@
         </div>
     </div>
     <?php endforeach;?>
+    <div class="row">
+        <div class="span12">
+            <a id="btn-statistics" class="btn btn-success btn-block btn-large" href="<?php echo $this->url(
+                        array('controller'=>'profile', 'action' => 'statistics'),
+                        'default',
+                    true);?>" title="Statisctics">Statistics</a>
+        </div>
+    </div>
 </div>
